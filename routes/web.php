@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ServicesController;
+use App\Http\Controllers\FindController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +28,6 @@ Route::prefix('services')->name('services')->group(function () {
     Route::get('/title-registration', [ServicesController::class, 'titleRegistration'])->name('.title-registration');
     Route::get('/land-registration', [ServicesController::class, 'landRegistration'])->name('.land-registration');
 });
+
+// Find Page
+Route::match(['get', 'post'], '/find', [FindController::class, 'index'])->name('find');
