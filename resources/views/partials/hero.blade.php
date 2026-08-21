@@ -40,21 +40,7 @@
         </div>
     </div>
 
-    {{-- Language Selection Pills (right side) --}}
-    <div class="hero-lang-bar" aria-label="Language selection">
-        <div class="lang-pill" id="lang-pill-si" title="Switch to Sinhala">
-            <span class="greeting">ආයුබෝවන්</span>
-            <span class="lang-name">සිංහල</span>
-        </div>
-        <div class="lang-pill" id="lang-pill-ta" title="Switch to Tamil">
-            <span class="greeting">வணக்கம்</span>
-            <span class="lang-name">தமிழ்</span>
-        </div>
-        <div class="lang-pill" id="lang-pill-en" title="Switch to English">
-            <span class="greeting">Ayubowan</span>
-            <span class="lang-name">ENGLISH</span>
-        </div>
-    </div>
+  
 
     {{-- Scroll Indicator --}}
     <div class="hero-scroll" onclick="document.getElementById('stats').scrollIntoView({behavior:'smooth'})" role="button" tabindex="0" aria-label="Scroll down">
