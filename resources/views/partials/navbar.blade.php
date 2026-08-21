@@ -130,7 +130,8 @@
 
             {{-- News & Events --}}
             <li class="nav-item" role="none">
-                <a href="{{ route('home') }}#news-events" class="nav-link" role="menuitem" id="nav-news">NEWS &
+                <a href="{{ route('news') }}" class="nav-link {{ request()->routeIs('news') ? 'active' : '' }}"
+                    role="menuitem" id="nav-news">NEWS &
                     EVENTS</a>
             </li>
 

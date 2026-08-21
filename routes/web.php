@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\FindController;
+use App\Http\Controllers\NewsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,9 @@ use App\Http\Controllers\FindController;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// News & Events
+Route::get('/news', [NewsController::class, 'index'])->name('news');
 
 // About Us & Subcategories
 Route::prefix('about')->name('about')->group(function () {

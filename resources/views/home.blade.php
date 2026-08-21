@@ -10,11 +10,12 @@
     {{-- Stats Bar --}}
     @include('partials.stats', ['stats' => $stats])
 
+    {{-- Latest News Slideshow --}}
+    @include('partials.latest-news-slideshow')
+
     {{-- Services --}}
     @include('partials.services')
 
-    {{-- News & Events --}}
-    @include('partials.news-events', ['news' => collect($news)])
 
     {{-- Mission & Vision --}}
     @include('partials.mission-vision')
