@@ -6,6 +6,7 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\FindController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\ContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,10 @@ use App\Http\Controllers\NewsController;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Contact Us
+Route::get('/contact/inquiry', [ContactController::class, 'inquiry'])->name('contact.inquiry');
+Route::post('/contact/inquiry', [ContactController::class, 'submitInquiry'])->name('contact.inquiry.submit');
 
 // News & Events
 Route::get('/news', [NewsController::class, 'index'])->name('news');

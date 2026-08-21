@@ -147,8 +147,9 @@
 
             {{-- Contact Us --}}
             <li class="nav-item" role="none">
-                <a href="#" class="nav-link" role="menuitem" aria-haspopup="true" aria-expanded="false"
-                    id="nav-contact">
+                <a href="{{ route('contact.inquiry') }}"
+                    class="nav-link {{ request()->is('contact*') ? 'active' : '' }}" role="menuitem"
+                    aria-haspopup="true" aria-expanded="false" id="nav-contact">
                     CONTACT US
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -156,7 +157,9 @@
                 </a>
                 <div class="dropdown" role="menu" aria-label="Contact Us submenu">
                     <div class="dropdown-header">Get In Touch</div>
-                    <a href="#" class="dropdown-item" role="menuitem" id="nav-contact-head">
+                    <a href="{{ route('contact.inquiry') }}"
+                        class="dropdown-item {{ request()->routeIs('contact.inquiry') ? 'active-item' : '' }}"
+                        role="menuitem" id="nav-contact-head">
                         <span class="icon">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
@@ -170,7 +173,8 @@
                             </div>
                         </div>
                     </a>
-                    <a href="#" class="dropdown-item" role="menuitem" id="nav-contact-regional">
+                    <a href="{{ route('contact.inquiry') }}" class="dropdown-item" role="menuitem"
+                        id="nav-contact-regional">
                         <span class="icon">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
@@ -184,7 +188,9 @@
                             </div>
                         </div>
                     </a>
-                    <a href="#" class="dropdown-item" role="menuitem" id="nav-contact-inquiry">
+                    <a href="{{ route('contact.inquiry') }}"
+                        class="dropdown-item {{ request()->routeIs('contact.inquiry') ? 'active-item' : '' }}"
+                        role="menuitem" id="nav-contact-inquiry">
                         <span class="icon">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
