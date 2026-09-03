@@ -159,6 +159,22 @@
                     <div class="dropdown-header">Get In Touch</div>
                     <a href="{{ route('contact.inquiry') }}"
                         class="dropdown-item {{ request()->routeIs('contact.inquiry') ? 'active-item' : '' }}"
+                        role="menuitem" id="nav-contact-inquiry">
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                            </svg>
+                        </span>
+                        <div>
+                            <div style="font-weight:600;font-size:.88rem;">Inquiry</div>
+                            <div style="font-size:.75rem;color:#9ca3af;margin-top:.1rem;">Submit a query or complaint
+                            </div>
+                        </div>
+                    </a>
+                    <a href="{{ route('contact.head-office') }}"
+                        class="dropdown-item {{ request()->routeIs('contact.head-office') ? 'active-item' : '' }}"
                         role="menuitem" id="nav-contact-head">
                         <span class="icon">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -173,8 +189,9 @@
                             </div>
                         </div>
                     </a>
-                    <a href="{{ route('contact.inquiry') }}" class="dropdown-item" role="menuitem"
-                        id="nav-contact-regional">
+                    <a href="{{ route('contact.regional-office') }}"
+                        class="dropdown-item {{ request()->routeIs('contact.regional-office') ? 'active-item' : '' }}"
+                        role="menuitem" id="nav-contact-regional">
                         <span class="icon">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
@@ -185,22 +202,6 @@
                         <div>
                             <div style="font-weight:600;font-size:.88rem;">Regional Offices</div>
                             <div style="font-size:.75rem;color:#9ca3af;margin-top:.1rem;">Offices across all districts
-                            </div>
-                        </div>
-                    </a>
-                    <a href="{{ route('contact.inquiry') }}"
-                        class="dropdown-item {{ request()->routeIs('contact.inquiry') ? 'active-item' : '' }}"
-                        role="menuitem" id="nav-contact-inquiry">
-                        <span class="icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                            </svg>
-                        </span>
-                        <div>
-                            <div style="font-weight:600;font-size:.88rem;">Inquiry</div>
-                            <div style="font-size:.75rem;color:#9ca3af;margin-top:.1rem;">Submit a query or complaint
                             </div>
                         </div>
                     </a>

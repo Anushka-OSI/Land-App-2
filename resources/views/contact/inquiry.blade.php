@@ -6,9 +6,11 @@
 
     {{-- Banner --}}
     @include('partials.page-banner', [
-        'title' => 'Contact Us',
+        'title' => 'Contact Us – Inquiry',
         'subtitle' => 'Get in touch with the Department of Land Title Settlement',
-        'showSubnav' => false
+        'parent' => 'Contact Us',
+        'parentUrl' => route('contact.inquiry'),
+        'showContactnav' => true
     ])
 
     <div style="background: var(--gray-50); padding: 4rem 0;">
@@ -184,7 +186,8 @@
                                         </option>
                                         @foreach($offices as $office)
                                             <option value="{{ $office }}" {{ old('office') === $office ? 'selected' : '' }}>
-                                                {{ $office }}</option>
+                                                {{ $office }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>

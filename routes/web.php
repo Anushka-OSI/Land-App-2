@@ -19,6 +19,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 // Contact Us
 Route::get('/contact/inquiry', [ContactController::class, 'inquiry'])->name('contact.inquiry');
 Route::post('/contact/inquiry', [ContactController::class, 'submitInquiry'])->name('contact.inquiry.submit');
+Route::get('/contact/head-office', [ContactController::class, 'headOffice'])->name('contact.head-office');
+Route::get('/contact/regional-office', [ContactController::class, 'regionalOffice'])->name('contact.regional-office');
 
 // News & Events
 Route::get('/news', [NewsController::class, 'index'])->name('news');

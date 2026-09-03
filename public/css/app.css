@@ -2480,3 +2480,561 @@ ul { list-style: none; }
     .about-feature-card { padding: 2rem 1.25rem; }
     .feature-quote { font-size: 1.45rem; }
 }
+
+/* ══════════════════════════════════════════════════════════
+   CONTACT US PAGES
+   ══════════════════════════════════════════════════════════ */
+.contact-page-content {
+    padding: 4rem 0 6rem;
+    background: var(--gray-50);
+}
+
+/* ── Head Office Address Strip ──────────────────────────── */
+.ho-address-strip {
+    margin-bottom: 3rem;
+}
+.ho-addr-card {
+    background: linear-gradient(135deg, var(--green-800) 0%, var(--green-900) 100%);
+    border-radius: var(--radius-xl);
+    padding: 2rem 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    box-shadow: var(--shadow-lg);
+    flex-wrap: wrap;
+}
+.ho-addr-icon {
+    width: 64px;
+    height: 64px;
+    background: rgba(201,162,39,.2);
+    border: 1px solid rgba(201,162,39,.35);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--gold-400);
+}
+.ho-addr-details {
+    flex: 1;
+    min-width: 200px;
+}
+.ho-addr-details h3 {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: .3rem;
+}
+.ho-addr-details p {
+    font-size: .92rem;
+    color: rgba(255,255,255,.75);
+    margin: 0;
+}
+.ho-addr-contact {
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
+    font-size: .88rem;
+    color: rgba(255,255,255,.8);
+}
+.ho-addr-contact strong {
+    color: var(--gold-400);
+}
+
+/* ── Head Office Table ──────────────────────────────────── */
+.ho-table-wrap {
+    background: var(--white);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--gray-200);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    margin-bottom: 3rem;
+}
+.ho-table-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    background: var(--green-900);
+    color: var(--white);
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+.ho-table-toolbar-info {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-family: var(--font-accent);
+    font-weight: 600;
+    font-size: .9rem;
+}
+.ho-table-search {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: var(--radius-sm);
+    padding: .45rem .85rem;
+    color: var(--white);
+}
+.ho-table-search input {
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--white);
+    font-family: var(--font-accent);
+    font-size: .85rem;
+    width: 180px;
+}
+.ho-table-search input::placeholder {
+    color: rgba(255,255,255,.55);
+}
+
+.ho-table-container {
+    overflow-x: auto;
+}
+.ho-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .9rem;
+}
+.ho-table thead {
+    background: var(--green-50);
+}
+.ho-table th {
+    font-family: var(--font-accent);
+    font-weight: 700;
+    font-size: .75rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--green-800);
+    padding: 1rem 1.2rem;
+    text-align: left;
+    border-bottom: 2px solid var(--green-100);
+    white-space: nowrap;
+}
+.ho-table td {
+    padding: .95rem 1.2rem;
+    border-bottom: 1px solid var(--gray-100);
+    color: var(--gray-700);
+    vertical-align: middle;
+}
+.ho-table tbody tr {
+    transition: background .2s ease;
+}
+.ho-table tbody tr:hover {
+    background: var(--green-50);
+}
+.ho-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.ho-division-name {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+}
+.ho-div-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+.ho-officer-name {
+    font-weight: 600;
+    color: var(--gray-800);
+}
+.ho-phone-link {
+    color: var(--green-700);
+    font-weight: 600;
+    transition: color .2s ease;
+}
+.ho-phone-link:hover {
+    color: var(--green-900);
+}
+.ho-ext-badge {
+    display: inline-block;
+    background: var(--green-50);
+    color: var(--green-700);
+    font-family: var(--font-accent);
+    font-weight: 700;
+    font-size: .78rem;
+    padding: .2rem .6rem;
+    border-radius: 999px;
+    border: 1px solid var(--green-100);
+}
+.ho-email-link {
+    color: var(--green-600);
+    font-weight: 500;
+    transition: color .2s ease;
+}
+.ho-email-link:hover {
+    color: var(--green-800);
+    text-decoration: underline;
+}
+
+.ho-table-footer {
+    padding: .75rem 1.5rem;
+    background: var(--gray-100);
+    border-top: 1px solid var(--gray-200);
+    font-family: var(--font-accent);
+    font-size: .78rem;
+    color: var(--gray-600);
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+}
+
+/* ── Head Office Cards (Mobile) ─────────────────────────── */
+.ho-cards-grid {
+    display: none;
+}
+.ho-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--gray-200);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: var(--transition);
+}
+.ho-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--green-300);
+}
+.ho-card-top {
+    height: 5px;
+}
+.ho-card-body {
+    padding: 1.5rem;
+}
+.ho-card-header {
+    margin-bottom: 1rem;
+}
+.ho-card-badge {
+    font-family: var(--font-accent);
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--green-700);
+    background: var(--green-50);
+    padding: .2rem .6rem;
+    border-radius: 999px;
+    display: inline-block;
+    margin-bottom: .5rem;
+}
+.ho-card-header h4 {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    line-height: 1.3;
+}
+.ho-card-officer {
+    display: flex;
+    align-items: flex-start;
+    gap: .65rem;
+    padding: .85rem;
+    background: var(--gray-50);
+    border-radius: var(--radius-md);
+    margin-bottom: 1rem;
+    color: var(--green-700);
+}
+.ho-card-pos {
+    display: block;
+    font-size: .75rem;
+    color: var(--gray-500);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    font-family: var(--font-accent);
+    font-weight: 600;
+}
+.ho-card-name {
+    display: block;
+    font-weight: 700;
+    color: var(--gray-800);
+    font-size: .92rem;
+}
+.ho-card-contacts {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+.ho-card-contact-item {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: .85rem;
+    color: var(--gray-600);
+}
+.ho-card-contact-item svg {
+    color: var(--green-600);
+    flex-shrink: 0;
+}
+.ho-card-contact-item a {
+    color: var(--green-700);
+    font-weight: 600;
+    transition: color .2s ease;
+}
+.ho-card-contact-item a:hover {
+    color: var(--green-900);
+}
+
+/* ── Regional Office Page ───────────────────────────────── */
+.ro-filter-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+}
+.ro-search-wrap {
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-md);
+    padding: .75rem 1.25rem;
+    box-shadow: var(--shadow-sm);
+    flex: 1;
+    max-width: 480px;
+    transition: var(--transition-fast);
+    color: var(--gray-400);
+}
+.ro-search-wrap:focus-within {
+    border-color: var(--green-500);
+    box-shadow: 0 0 0 4px rgba(58,148,102,.15);
+}
+.ro-search-wrap input {
+    background: none;
+    border: none;
+    outline: none;
+    font-family: var(--font-body);
+    font-size: .95rem;
+    color: var(--gray-800);
+    flex: 1;
+    min-width: 0;
+}
+.ro-search-wrap input::placeholder {
+    color: var(--gray-400);
+}
+.ro-count-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .6rem 1.2rem;
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-md);
+    font-family: var(--font-accent);
+    font-size: .85rem;
+    color: var(--gray-600);
+    box-shadow: var(--shadow-sm);
+}
+.ro-count-badge strong {
+    color: var(--green-700);
+    font-weight: 700;
+}
+.ro-count-badge svg {
+    color: var(--green-600);
+}
+
+/* Province Section */
+.ro-province-section {
+    margin-bottom: 3rem;
+}
+.ro-province-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: .75rem;
+    border-bottom: 2px solid var(--green-100);
+}
+.ro-province-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--green-100);
+    color: var(--green-700);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.ro-province-header h3 {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--green-800);
+    margin: 0;
+}
+.ro-province-count {
+    font-family: var(--font-accent);
+    font-size: .78rem;
+    font-weight: 600;
+    color: var(--gray-500);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+
+/* Office Cards Grid */
+.ro-offices-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+.ro-office-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--gray-200);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: var(--transition);
+}
+.ro-office-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--green-300);
+}
+.ro-office-card-top {
+    height: 4px;
+    background: linear-gradient(90deg, var(--green-600), var(--green-400));
+}
+.ro-office-card:hover .ro-office-card-top {
+    background: linear-gradient(90deg, var(--gold-500), var(--green-500));
+}
+.ro-office-card-body {
+    padding: 1.5rem;
+}
+
+.ro-office-header {
+    display: flex;
+    align-items: flex-start;
+    gap: .75rem;
+    margin-bottom: 1.25rem;
+}
+.ro-office-pin {
+    width: 40px;
+    height: 40px;
+    background: var(--green-50);
+    color: var(--green-600);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: var(--transition);
+}
+.ro-office-card:hover .ro-office-pin {
+    background: var(--green-700);
+    color: var(--white);
+    transform: scale(1.05);
+}
+.ro-office-header h4 {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    line-height: 1.35;
+}
+
+.ro-office-details {
+    display: flex;
+    flex-direction: column;
+    gap: .65rem;
+}
+.ro-detail-item {
+    display: flex;
+    align-items: flex-start;
+    gap: .55rem;
+    font-size: .86rem;
+    color: var(--gray-600);
+    line-height: 1.5;
+}
+.ro-detail-item svg {
+    width: 16px;
+    height: 16px;
+    color: var(--green-500);
+    flex-shrink: 0;
+    margin-top: .12rem;
+}
+.ro-detail-item a {
+    color: var(--green-700);
+    font-weight: 600;
+    transition: color .2s ease;
+}
+.ro-detail-item a:hover {
+    color: var(--green-900);
+    text-decoration: underline;
+}
+
+/* No Results */
+.ro-no-results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    text-align: center;
+    color: var(--gray-400);
+    gap: 1rem;
+}
+.ro-no-results h3 {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    color: var(--gray-500);
+}
+.ro-no-results p {
+    font-size: .95rem;
+    color: var(--gray-400);
+}
+
+/* ── Contact Pages Responsive ───────────────────────────── */
+@media (max-width: 1100px) {
+    .ro-offices-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .ho-table-wrap {
+        display: none;
+    }
+    .ho-cards-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+    .ho-addr-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    .ho-addr-contact {
+        align-items: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .ho-cards-grid {
+        grid-template-columns: 1fr;
+    }
+    .ro-offices-grid {
+        grid-template-columns: 1fr;
+    }
+    .ro-filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .ro-search-wrap {
+        max-width: 100%;
+    }
+    .contact-page-content {
+        padding: 3rem 0 4rem;
+    }
+}
