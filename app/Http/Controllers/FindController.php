@@ -2,33 +2,152 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Http\Client\Response;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class FindController extends Controller
 {
-    public function index(Request $request)
+    /**
+     * Show the Find Land page. The search runs in the browser (JavaScript),
+     * which sends a GET request to the search() endpoint below.
+     */
+    public function index()
     {
-        $result = null;
-        $searched = false;
+        return view('find');
+    }
 
-        if ($request->isMethod('post')) {
-            $searched = true;
-            // Mock data response based on inputs
-            $result = [
-                'name' => 'W. A. Samarathunga',
-                'size' => '2 Acres 1 Rood 14 Perches',
-                'current_stage' => 'Title Certificate Issued',
-                'file_number' => 'LSO/K/104/22',
-                'gazette_number' => 'No. 2234/12',
-                'gazetted_date' => '2023-11-15'
-            ];
+    /**
+     * GET /find/search?map_no=..&block_no=..&sheet_no=..&lot_no=..
+     *
+     * Calls the eTitle API:
+     *   {base_url}/get-form14-get-record/{map}/{block}/{sheetno}/{lotno}
+     * and returns its JSON unchanged:
+     *   found:     {"message":[{...record...}],"states":200}
+     *   not found: {"message":"Data Not found..","states":500}
+     */
+    public function search(Request $request): JsonResponse
+    {
+        $rule = ['required', 'string', 'max:50', 'regex:/^[A-Za-z0-9\-]+$/'];
 
-            // if you want some random logic or check:
-            if (empty($request->map_no) && empty($request->block_no) && empty($request->sheet_no) && empty($request->lot_no)) {
-                $result = null; // simulate not found if everything is empty
-            }
+        $validated = $request->validate([
+            'map_no'   => $rule,
+            'block_no' => $rule,
+            'sheet_no' => $rule,
+            'lot_no'   => $rule,
+        ], [
+            'map_no.required'   => __('Please enter the Map Number.'),
+            'block_no.required' => __('Please enter the Block Number.'),
+            'sheet_no.required' => __('Please enter the Sheet Number.'),
+            'lot_no.required'   => __('Please enter the Lot Number.'),
+            '*.regex'           => __('Only letters, numbers and hyphens are allowed.'),
+        ]);
+
+        $path = 'get-form14-get-record/' . implode('/', array_map(
+            fn ($value) => rawurlencode(trim($value)),
+            [$validated['map_no'], $validated['block_no'], $validated['sheet_no'], $validated['lot_no']]
+        ));
+
+        return $this->proxy($path);
+    }
+
+    /**
+     * GET /find/search-nic?nic=..
+     *
+     * Calls the eTitle "search by NIC" API (path set by ETITLE_NIC_PATH in .env)
+     * and returns its JSON unchanged.
+     */
+    public function searchByNic(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'nic' => ['required', 'string', 'regex:/^([0-9]{9}[vVxX]|[0-9]{12})$/'],
+        ], [
+            'nic.required' => __('Please enter your NIC number.'),
+            'nic.regex'    => __('Enter a valid NIC (e.g. 851234567V or 198512345678).'),
+        ]);
+
+        $nicPath = config('services.etitle.nic_path');
+
+        if (!$nicPath) {
+            return response()->json([
+                'states'  => 501,
+                'message' => __('Search by NIC is not available yet. Please search using the Map, Block, Sheet and Lot numbers.'),
+            ], 501);
         }
 
-        return view('find', compact('searched', 'result'));
+        $path = str_replace('{nic}', rawurlencode(strtoupper($validated['nic'])), ltrim($nicPath, '/'));
+
+        return $this->proxy($path);
+    }
+
+    /**
+     * Call {base_url}/{path} on the eTitle API and return its JSON.
+     *   found:     {"message":[{...record...}],"states":200}
+     *   not found: {"message":"Data Not found..","states":500}
+     */
+    private function proxy(string $path): JsonResponse
+    {
+        $baseUrl = rtrim(config('services.etitle.base_url'), '/');
+        $url = $baseUrl . '/' . $path;
+
+        try {
+            $response = $this->callApi($url, $baseUrl);
+        } catch (ConnectionException $e) {
+            Log::warning('eTitle API unreachable', ['url' => $url, 'error' => $e->getMessage()]);
+
+            return response()->json([
+                'states'  => 503,
+                'message' => __('Unable to reach the land records service. Please try again later.'),
+            ], 503);
+        }
+
+        $json = $response->json();
+
+        if (!is_array($json)) {
+            Log::warning('eTitle API returned non-JSON', ['url' => $url, 'status' => $response->status()]);
+
+            return response()->json([
+                'states'  => 502,
+                'message' => __('The land records service returned an unexpected response.'),
+            ], 502);
+        }
+
+        return response()->json($json);
+    }
+
+    /**
+     * Call the API normally; if the connection fails and a fallback IP is configured,
+     * retry while forcing the host name to resolve to that IP. Some networks' DNS
+     * returns an internal address (10.250.1.139) that is unreachable from outside.
+     */
+    private function callApi(string $url, string $baseUrl): Response
+    {
+        $timeout = (int) config('services.etitle.timeout', 20);
+        $fallbackIp = config('services.etitle.fallback_ip');
+
+        $request = fn (array $curlOptions = []) => Http::acceptJson()
+            ->connectTimeout($fallbackIp ? 5 : $timeout)
+            ->timeout($timeout)
+            ->withOptions(['curl' => $curlOptions])
+            ->get($url);
+
+        try {
+            return $request();
+        } catch (ConnectionException $e) {
+            if (!$fallbackIp) {
+                throw $e;
+            }
+
+            $host = parse_url($baseUrl, PHP_URL_HOST);
+            $port = parse_url($baseUrl, PHP_URL_PORT)
+                ?: (parse_url($baseUrl, PHP_URL_SCHEME) === 'https' ? 443 : 80);
+
+            Log::info('eTitle API: retrying via fallback IP', ['host' => $host, 'ip' => $fallbackIp]);
+
+            return $request([CURLOPT_RESOLVE => ["{$host}:{$port}:{$fallbackIp}"]]);
+        }
     }
 }

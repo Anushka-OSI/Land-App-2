@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
-@section('title', 'Regional Offices | Department of Land Title Settlement')
+@section('title', __('Regional Offices | Department of Land Title Settlement'))
 
 @section('content')
 
     {{-- Banner --}}
     @include('partials.page-banner', [
-        'title' => 'Regional Offices',
-        'subtitle' => 'Find contact details for Land Title Settlement offices across all 25 districts',
-        'parent' => 'Contact Us',
+        'title' => __('Regional Offices'),
+        'subtitle' => __('Find contact details for Land Title Settlement offices across all 25 districts'),
+        'parent' => __('Contact Us'),
         'parentUrl' => route('contact.inquiry'),
         'showContactnav' => true
     ])
@@ -18,9 +18,9 @@
 
             {{-- Section Label --}}
             <div class="section-intro-text text-center reveal" style="margin-bottom:2.5rem;">
-                <span class="section-label">Island-Wide Network</span>
-                <h2 class="section-title">District Office Directory</h2>
-                <p class="section-subtitle">All regional offices grouped by province for easy navigation</p>
+                <span class="section-label">{{ __('Island-Wide Network') }}</span>
+                <h2 class="section-title">{{ __('District Office Directory') }}</h2>
+                <p class="section-subtitle">{{ __('All regional offices grouped by province for easy navigation') }}</p>
             </div>
 
             {{-- Search / Filter Bar --}}
@@ -31,7 +31,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
-                    <input type="text" id="ro-search" placeholder="Search by district, province, or address…"
+                    <input type="text" id="ro-search" placeholder="{{ __('Search by district, province, or address…') }}"
                         autocomplete="off">
                 </div>
                 <div class="ro-count-badge">
@@ -40,7 +40,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     </svg>
-                    <span><strong>{{ count($districts) }}</strong> Offices across <strong>9</strong> Provinces</span>
+                    <span>{!! __('<strong>:count</strong> Offices across <strong>:provinces</strong> Provinces', ['count' => count($districts), 'provinces' => 9]) !!}</span>
                 </div>
             </div>
 
@@ -62,7 +62,7 @@
                         <div>
                             <h3>{{ $province }}</h3>
                             <span class="ro-province-count">{{ count($offices) }}
-                                {{ count($offices) === 1 ? 'Office' : 'Offices' }}</span>
+                                {{ count($offices) === 1 ? __('Office') : __('Offices') }}</span>
                         </div>
                     </div>
 
@@ -130,8 +130,8 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                         d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
-                <h3>No offices found</h3>
-                <p>Try a different search term or browse by province above.</p>
+                <h3>{{ __('No offices found') }}</h3>
+                <p>{{ __('Try a different search term or browse by province above.') }}</p>
             </div>
 
         </div>

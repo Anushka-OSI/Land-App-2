@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
-@section('title', 'Head Office Directory | Department of Land Title Settlement')
+@section('title', __('Head Office Directory | Department of Land Title Settlement'))
 
 @section('content')
 
     {{-- Banner --}}
     @include('partials.page-banner', [
-        'title' => 'Head Office Directory',
-        'subtitle' => 'Contact details for all divisions at the Battaramulla headquarters',
-        'parent' => 'Contact Us',
+        'title' => __('Head Office Directory'),
+        'subtitle' => __('Contact details for all divisions at the Battaramulla headquarters'),
+        'parent' => __('Contact Us'),
         'parentUrl' => route('contact.inquiry'),
         'showContactnav' => true
     ])
@@ -27,22 +27,22 @@
                         </svg>
                     </div>
                     <div class="ho-addr-details">
-                        <h3>Department of Land Title Settlement – Head Office</h3>
-                        <p>1200/7, Rajamalwatta Road, Battaramulla, Sri Lanka</p>
+                        <h3>{{ __('Department of Land Title Settlement – Head Office') }}</h3>
+                        <p>{{ __('1200/7, Rajamalwatta Road, Battaramulla, Sri Lanka') }}</p>
                     </div>
                     <div class="ho-addr-contact">
-                        <span><strong>General:</strong> 011-2888935</span>
-                        <span><strong>Fax:</strong> 011-2888937</span>
-                        <span><strong>Email:</strong> info@landtitle.gov.lk</span>
+                        <span>{!! __('<strong>General:</strong> 011-2888935') !!}</span>
+                        <span>{!! __('<strong>Fax:</strong> 011-2888937') !!}</span>
+                        <span>{!! __('<strong>Email:</strong> info@landtitle.gov.lk') !!}</span>
                     </div>
                 </div>
             </div>
 
             {{-- Section Label --}}
             <div class="section-intro-text text-center reveal" style="margin-bottom:2.5rem;">
-                <span class="section-label">Divisions & Officers</span>
-                <h2 class="section-title">Head Office Directory</h2>
-                <p class="section-subtitle">Complete contact information for all divisions and sections</p>
+                <span class="section-label">{{ __('Divisions & Officers') }}</span>
+                <h2 class="section-title">{{ __('Head Office Directory') }}</h2>
+                <p class="section-subtitle">{{ __('Complete contact information for all divisions and sections') }}</p>
             </div>
 
             {{-- Division Table --}}
@@ -54,7 +54,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0" />
                         </svg>
-                        <span>{{ count($divisions) }} Divisions & Sections</span>
+                        <span>{{ __(':count Divisions & Sections', ['count' => count($divisions)]) }}</span>
                     </div>
                     <div class="ho-table-search">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -62,7 +62,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
-                        <input type="text" id="ho-search" placeholder="Search divisions…" autocomplete="off">
+                        <input type="text" id="ho-search" placeholder="{{ __('Search divisions…') }}" autocomplete="off">
                     </div>
                 </div>
 
@@ -70,13 +70,13 @@
                     <table class="ho-table" id="ho-directory-table">
                         <thead>
                             <tr>
-                                <th>Division / Section</th>
-                                <th>Position</th>
-                                <th>Officer Name</th>
-                                <th>Phone</th>
-                                <th>Fax</th>
-                                <th>Ext.</th>
-                                <th>Email</th>
+                                <th>{{ __('Division / Section') }}</th>
+                                <th>{{ __('Position') }}</th>
+                                <th>{{ __('Officer Name') }}</th>
+                                <th>{{ __('Phone') }}</th>
+                                <th>{{ __('Fax') }}</th>
+                                <th>{{ __('Ext.') }}</th>
+                                <th>{{ __('Email') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -107,8 +107,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <span>Office hours: Monday – Friday, 8:30 AM – 4:15 PM. All phone numbers are in the Colombo area
-                        (011).</span>
+                    <span>{{ __('Office hours: Monday – Friday, 8:30 AM – 4:15 PM. All phone numbers are in the Colombo area (011).') }}</span>
                 </div>
             </div>
 
@@ -121,7 +120,7 @@
                         </div>
                         <div class="ho-card-body">
                             <div class="ho-card-header">
-                                <span class="ho-card-badge">{{ $index === 0 ? '★ Head' : 'Division' }}</span>
+                                <span class="ho-card-badge">{{ $index === 0 ? __('★ Head') : __('Division') }}</span>
                                 <h4>{{ $div['division'] }}</h4>
                             </div>
                             <div class="ho-card-officer">
@@ -150,7 +149,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                     </svg>
-                                    <span>Fax: {{ $div['fax'] }}</span>
+                                    <span>{{ __('Fax') }}: {{ $div['fax'] }}</span>
                                 </div>
                                 <div class="ho-card-contact-item">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -158,7 +157,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
                                     </svg>
-                                    <span>Ext: {{ $div['extension'] }}</span>
+                                    <span>{{ __('Ext') }}: {{ $div['extension'] }}</span>
                                 </div>
                                 <div class="ho-card-contact-item">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"

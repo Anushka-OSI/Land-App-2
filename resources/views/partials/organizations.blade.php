@@ -1,19 +1,19 @@
 {{-- Related Organizations Marquee --}}
 @php
     $organizationsList = $organizations ?? [
-        ['name' => 'Ministry of Land and Land Development', 'logo' => null],
-        ['name' => 'Survey Department',                      'logo' => null],
-        ['name' => 'Department of Land Title Settlement',    'logo' => null],
-        ['name' => 'Government Press',                       'logo' => null],
-        ['name' => 'Land Commissioner General\'s Department','logo' => null],
-        ['name' => 'Registrar General\'s Department',        'logo' => null],
+        ['name' => __('Ministry of Land and Land Development'), 'logo' => null],
+        ['name' => __('Survey Department'),                      'logo' => null],
+        ['name' => __('Department of Land Title Settlement'),    'logo' => null],
+        ['name' => __('Government Press'),                       'logo' => null],
+        ['name' => __('Land Commissioner General\'s Department'),'logo' => null],
+        ['name' => __('Registrar General\'s Department'),        'logo' => null],
     ];
 @endphp
 
-<section class="orgs-section" id="organizations" aria-label="Related government organizations">
+<section class="orgs-section" id="organizations" aria-label="{{ __('Related government organizations') }}">
     <div class="container">
         <div class="orgs-header reveal">
-            <p class="orgs-label">Related Government Organizations</p>
+            <p class="orgs-label">{{ __('Related Government Organizations') }}</p>
         </div>
     </div>
 

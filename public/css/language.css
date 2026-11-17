@@ -1,0 +1,178 @@
+/* ==========================================================
+   Site language (English / සිංහල / தமிழ்)
+   - fonts with Sinhala & Tamil glyphs
+   - first-visit language chooser
+   - language switcher (top bar + mobile menu)
+   ========================================================== */
+
+/* Figtree has no Sinhala/Tamil glyphs, so the browser falls back to Noto Sans per character. */
+:root {
+    --font-heading: 'Figtree', 'Noto Sans Sinhala', 'Noto Sans Tamil', system-ui, sans-serif;
+    --font-body:    'Figtree', 'Noto Sans Sinhala', 'Noto Sans Tamil', system-ui, sans-serif;
+    --font-accent:  'Figtree', 'Noto Sans Sinhala', 'Noto Sans Tamil', system-ui, sans-serif;
+}
+body [lang="si"] { font-family: 'Noto Sans Sinhala', 'Figtree', system-ui, sans-serif; }
+body [lang="ta"] { font-family: 'Noto Sans Tamil', 'Figtree', system-ui, sans-serif; }
+
+/* Sinhala & Tamil words are longer and taller than English: give text a little more room. */
+html:lang(si) body, html:lang(ta) body { line-height: 1.75; }
+html:lang(si) .nav-link, html:lang(ta) .nav-link { letter-spacing: 0; text-transform: none; }
+html:lang(ta) .nav-link { font-size: .76rem; padding-left: .6rem; padding-right: .6rem; }
+html:lang(si) .nav-link { font-size: .8rem;  padding-left: .7rem; padding-right: .7rem; }
+html:lang(si) .hero-title, html:lang(ta) .hero-title { line-height: 1.3; }
+html:lang(ta) .hero-title { font-size: clamp(1.8rem, 4vw, 3rem); }
+html:lang(si) .section-title, html:lang(ta) .section-title,
+html:lang(si) .page-banner-title, html:lang(ta) .page-banner-title { line-height: 1.35; }
+html:lang(si) .label, html:lang(ta) .label,
+html:lang(si) .section-label, html:lang(ta) .section-label,
+html:lang(si) .mission-label, html:lang(ta) .mission-label,
+html:lang(si) .news-section-label, html:lang(ta) .news-section-label,
+html:lang(si) .slide-category, html:lang(ta) .slide-category { letter-spacing: .02em; }
+
+/* The desktop navbar has less room for long Tamil labels: let it wrap instead of overflowing. */
+@media (min-width: 769px) and (max-width: 1280px) {
+    html:lang(ta) .nav-link, html:lang(si) .nav-link { white-space: normal; text-align: center; line-height: 1.25; }
+}
+
+/* ── Language switcher ───────────────────────────────────── */
+.top-bar .container { gap: 1rem; }
+.top-bar-left { width: auto; flex: 1 1 auto; justify-content: flex-start; }
+
+.language-switcher {
+    display: inline-flex;
+    align-items: center;
+    gap: .25rem;
+    flex-shrink: 0;
+}
+.language-switcher-icon { width: 15px; height: 15px; margin-right: .2rem; color: var(--green-300, #86efac); }
+.language-switcher-link {
+    display: inline-block;
+    padding: .15rem .6rem;
+    border-radius: 999px;
+    font-size: .8rem;
+    font-weight: 600;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, .85);
+    border: 1px solid transparent;
+    text-decoration: none;
+    transition: background .2s ease, color .2s ease, border-color .2s ease;
+}
+.language-switcher-link:hover { color: #fff; border-color: rgba(255, 255, 255, .35); }
+.language-switcher-link.active { background: var(--gold-500, #c9a227); color: #fff; }
+
+/* inside the mobile menu */
+.nav-language { display: none; }
+@media (max-width: 768px) {
+    .nav-language {
+        display: block;
+        order: -1;                       /* first item in the slide-out menu */
+        padding: 0 .25rem .75rem;
+        margin-bottom: .25rem;
+        border-bottom: 1px solid var(--gray-100, #f3f4f6);
+    }
+}
+.language-switcher--menu { flex-wrap: wrap; }
+.language-switcher--menu .language-switcher-icon { color: var(--green-600, #16a34a); }
+.language-switcher--menu .language-switcher-link {
+    color: var(--gray-700, #374151);
+    border-color: var(--gray-200, #e5e7eb);
+    font-size: .9rem;
+    padding: .35rem .85rem;
+}
+.language-switcher--menu .language-switcher-link.active {
+    background: var(--green-600, #16a34a);
+    border-color: var(--green-600, #16a34a);
+    color: #fff;
+}
+
+/* ── First-visit language chooser ────────────────────────── */
+body.has-language-gate { overflow: hidden; }
+
+.language-gate {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    overflow-y: auto;
+    background:
+        radial-gradient(circle at 20% 15%, rgba(201, 162, 39, .18), transparent 45%),
+        linear-gradient(135deg, var(--green-900, #0b3d24), var(--green-700, #1f6b43));
+}
+.language-gate-card {
+    width: min(560px, 100%);
+    background: #fff;
+    border-radius: 20px;
+    padding: 2.5rem 2rem 2rem;
+    text-align: center;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, .35);
+    animation: language-gate-in .45s cubic-bezier(.2, .8, .2, 1);
+}
+@keyframes language-gate-in {
+    from { opacity: 0; transform: translateY(16px) scale(.98); }
+    to   { opacity: 1; transform: none; }
+}
+.language-gate-emblem {
+    width: 84px;
+    height: 84px;
+    object-fit: contain;
+    border-radius: 50%;
+    margin: 0 auto 1.25rem;
+    display: block;
+}
+.language-gate-title,
+.language-gate-prompt,
+.language-gate-note { display: flex; flex-direction: column; gap: .2rem; }
+.language-gate-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.45;
+    color: var(--green-900, #0b3d24);
+    margin: 0 0 1.25rem;
+}
+.language-gate-title span[lang="en"] { font-size: 1.15rem; }
+.language-gate-prompt {
+    font-size: .95rem;
+    color: var(--gray-600, #4b5563);
+    margin: 0 0 1.5rem;
+}
+.language-gate-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: .75rem;
+    margin-bottom: 1.5rem;
+}
+.language-gate-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .2rem;
+    min-height: 92px;
+    padding: 1rem .5rem;
+    border: 2px solid var(--green-100, #dcfce7);
+    border-radius: 14px;
+    background: var(--green-50, #f0fdf4);
+    color: var(--green-800, #14532d);
+    text-decoration: none;
+    transition: transform .15s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
+}
+.language-gate-btn:hover,
+.language-gate-btn:focus-visible {
+    border-color: var(--green-600, #16a34a);
+    background: #fff;
+    box-shadow: 0 8px 22px rgba(22, 101, 52, .18);
+    transform: translateY(-2px);
+    outline: none;
+}
+.language-gate-native { font-size: 1.35rem; font-weight: 700; line-height: 1.3; }
+.language-gate-latin { font-size: .78rem; font-weight: 600; color: var(--gray-500, #6b7280); letter-spacing: .04em; text-transform: uppercase; }
+.language-gate-note { font-size: .78rem; color: var(--gray-500, #6b7280); margin: 0; }
+
+@media (max-width: 480px) {
+    .language-gate-card { padding: 2rem 1.25rem 1.5rem; }
+    .language-gate-options { grid-template-columns: 1fr; }
+    .language-gate-btn { min-height: 64px; flex-direction: row; gap: .6rem; }
+}

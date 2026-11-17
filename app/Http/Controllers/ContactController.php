@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Message;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
@@ -52,6 +53,9 @@ class ContactController extends Controller
             'Regional Office – Kegalle',
         ];
 
+        // value = English name (what is saved), label = name in the visitor's language
+        $offices = collect($offices)->mapWithKeys(fn ($office) => [$office => self::officeName($office)])->all();
+
         return view('contact.inquiry', compact('offices'));
     }
 
@@ -68,8 +72,17 @@ class ContactController extends Controller
             'message' => 'required|string|min:10|max:5000',
         ]);
 
-        // In production, save to DB or send email
-        return back()->with('success', 'Thank you! Your inquiry has been submitted successfully. We will respond within 3–5 working days.');
+        // Saved to Admin → Messages
+        Message::create([
+            'type'    => 'inquiry',
+            'name'    => $validated['full_name'],
+            'email'   => $validated['email'],
+            'subject' => $validated['subject'],
+            'office'  => $validated['office'],
+            'body'    => $validated['message'],
+        ]);
+
+        return back()->with('success', __('Thank you! Your inquiry has been submitted successfully. We will respond within 3–5 working days.'));
     }
 
     /**
@@ -187,6 +200,11 @@ class ContactController extends Controller
                 'email' => 'legal@landtitle.gov.lk',
             ],
         ];
+
+        $divisions = array_map(fn ($d) => array_merge($d, [
+            'division' => __($d['division']),
+            'position' => __($d['position']),
+        ]), $divisions);
 
         return view('contact.head-office', compact('divisions'));
     }
@@ -383,6 +401,24 @@ class ContactController extends Controller
             ],
         ];
 
+        $districts = array_map(fn ($d) => array_merge($d, [
+            'province' => __($d['province']),
+            'office' => self::officeName($d['office']),
+        ]), $districts);
+
         return view('contact.regional-office', compact('districts'));
+    }
+
+    /**
+     * Translate an office name such as "Regional Office – Kandy":
+     * the part before the dash and the place name are translated separately.
+     */
+    private static function officeName(string $name): string
+    {
+        if (preg_match('/^(.+) – (.+)$/u', $name, $m)) {
+            return __($m[1] . ' – :place', ['place' => __($m[2])]);
+        }
+
+        return __($name);
     }
 }

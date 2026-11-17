@@ -125,10 +125,11 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', () => {
             const target = btn.dataset.tab;
 
-            tabBtns.forEach(b => b.classList.remove('active'));
+            tabBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
             tabPanels.forEach(p => p.classList.remove('active'));
 
             btn.classList.add('active');
+            btn.setAttribute('aria-selected', 'true');
             const panel = document.getElementById('tab-' + target);
             if (panel) {
                 panel.classList.add('active');

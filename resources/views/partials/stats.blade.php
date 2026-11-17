@@ -1,5 +1,5 @@
 {{-- Stats Bar --}}
-<section class="stats-bar" id="stats" aria-label="Department statistics">
+<section class="stats-bar" id="stats" aria-label="{{ __('Department statistics') }}">
     <div class="stats-grid">
         @foreach($stats as $stat)
         <div class="stat-item reveal">

@@ -2,63 +2,89 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
+use App\Models\News;
+use App\Support\Languages;
 use Illuminate\Http\Request;
 
+/**
+ * Public "News & Events" pages.
+ * Content is managed in the admin panel (Admin → News & Notices, Admin → Events).
+ * Each item can be written in English, Sinhala and Tamil and is shown in the visitor's site language
+ * (falling back to another language when it has not been translated).
+ */
 class NewsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $news = [
-            [
-                'id' => 1,
-                'category' => 'News',
-                'title' => 'Special Training Program on Title Registration in Sri Lanka – Anuradapura District',
-                'excerpt' => 'A special training program was conducted for officers on modern title registration processes in the Anuradapura district.',
-                'date' => '2026-08-10',
-                'badge' => 'news',
-            ],
-            [
-                'id' => 2,
-                'category' => 'Notice',
-                'title' => 'Public Notice – Notice of Public Investigation under Section 13',
-                'excerpt' => 'Notice of Public Investigation under Section 13 of the Registration of Title Act No. 21 of 1998.',
-                'date' => '2026-08-08',
-                'badge' => 'notice',
-            ],
-            [
-                'id' => 3,
-                'category' => 'Event',
-                'title' => 'Title Investigation Officers Training Programs – 2026 (Weligama, Matara)',
-                'excerpt' => 'Upcoming training programs for Title Investigation Officers across the southern province.',
-                'date' => '2026-08-15',
-                'badge' => 'event',
-            ],
-            [
-                'id' => 4,
-                'category' => 'News',
-                'title' => 'Department Launches Digital Land Registry Initiative',
-                'excerpt' => 'The Department of Land Title Settlement has officially launched its digital land registry platform.',
-                'date' => '2026-08-05',
-                'badge' => 'news',
-            ],
-            [
-                'id' => 5,
-                'category' => 'Notice',
-                'title' => 'Public Notice – Land Settlement Operations in Galle District',
-                'excerpt' => 'Public notice regarding land settlement operations commencing in the Galle district.',
-                'date' => '2026-08-03',
-                'badge' => 'notice',
-            ],
-            [
-                'id' => 6,
-                'category' => 'Event',
-                'title' => 'Annual Review Meeting – District Offices 2026',
-                'excerpt' => 'Annual review meeting for all district office heads scheduled for September 2026.',
-                'date' => '2026-09-05',
-                'badge' => 'event',
-            ],
-        ];
+        $lang = self::contentLanguage($request);
 
-        return view('news.index', compact('news'));
+        $news = News::published()->get();
+        $events = Event::published()->with('images')->get();
+
+        return view('news.index', compact('news', 'events', 'lang'));
+    }
+
+    public function show(Request $request, News $news)
+    {
+        abort_unless($news->is_published, 404);
+
+        $lang = self::contentLanguage($request);
+        $related = News::published()->whereKeyNot($news->id)->take(3)->get();
+
+        return view('news.show', ['item' => $news, 'related' => $related, 'lang' => $lang]);
+    }
+
+    public function showEvent(Request $request, Event $event)
+    {
+        abort_unless($event->is_published, 404);
+
+        $lang = self::contentLanguage($request);
+        $event->load('images');
+        $related = Event::published()->whereKeyNot($event->id)->take(3)->get();
+
+        return view('news.event', ['item' => $event, 'related' => $related, 'lang' => $lang]);
+    }
+
+    /**
+     * Language to read News & Events in: the site language chosen by the visitor
+     * (see App\Http\Middleware\SetLocale). On an article page, ?read=xx shows that one
+     * article in another language without changing the language of the whole website.
+     */
+    public static function contentLanguage(Request $request): string
+    {
+        $read = $request->query('read');
+
+        return Languages::isValid($read) ? $read : Languages::current();
+    }
+
+    /**
+     * The latest published News & Notices and Events (newest first) for the homepage.
+     * Picked automatically – older items appear only on the News & Events pages.
+     * Shape used by partials/latest-news-slideshow.
+     */
+    public static function homepageItems(string $lang = 'en', int $limit = 5)
+    {
+        $news = News::published()->take($limit)->get()
+            ->map(fn (News $n) => [
+                'type' => __('News & Notices'),
+                'title' => $n->t('title', $lang),
+                'excerpt' => $n->t('excerpt', $lang),
+                'date' => $n->published_at,
+                'language' => $n->displayLanguage($lang),
+                'url' => route('news.show', $n),
+            ]);
+
+        $events = Event::published()->take($limit)->get()
+            ->map(fn (Event $e) => [
+                'type' => __('Event'),
+                'title' => $e->t('title', $lang),
+                'excerpt' => $e->t('excerpt', $lang),
+                'date' => $e->event_date,
+                'language' => $e->displayLanguage($lang),
+                'url' => route('events.show', $e),
+            ]);
+
+        return $news->concat($events)->sortByDesc('date')->take($limit)->values();
     }
 }

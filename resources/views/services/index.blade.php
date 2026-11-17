@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
-@section('title', 'Services | Department of Land Title Settlement')
+@section('title', __('Services | Department of Land Title Settlement'))
 
 @section('content')
 
     {{-- Banner --}}
     @include('partials.page-banner', [
-        'title' => 'Our Services',
-        'subtitle' => 'Comprehensive Land Management Solutions',
-        'parent' => 'Home',
+        'title' => __('Our Services'),
+        'subtitle' => __('Comprehensive Land Management Solutions'),
+        'parent' => __('Home'),
         'parentUrl' => route('home'),
         'showSubnav' => false
     ])

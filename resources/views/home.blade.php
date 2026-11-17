@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Home | Department of Land Title Settlement | Sri Lanka')
+@section('title', __('Home | Department of Land Title Settlement | Sri Lanka'))
 
 @section('content')
 

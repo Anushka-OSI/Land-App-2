@@ -31,4 +31,14 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    // eTitle land records API (Find Land page)
+    'etitle' => [
+        'base_url' => env('ETITLE_API_URL', 'http://etitle.landsettledept.gov.lk'),
+        // Public IP to fall back to when local DNS points the host at an unreachable internal address
+        'fallback_ip' => env('ETITLE_API_IP'),
+        'timeout' => (int) env('ETITLE_API_TIMEOUT', 20),
+        // Path of the "search by NIC" API, with {nic} as placeholder, e.g. get-records-by-nic/{nic}
+        'nic_path' => env('ETITLE_NIC_PATH'),
+    ],
+
 ];

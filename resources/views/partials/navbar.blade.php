@@ -1,14 +1,14 @@
 {{-- Main Navigation --}}
-<nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
+<nav class="navbar" id="navbar" role="navigation" aria-label="{{ __('Main navigation') }}">
     <div class="container">
 
         {{-- Logo --}}
-        <a href="{{ route('home') }}" class="nav-logo" aria-label="Department of Land Title Settlement Home">
-            <img src="{{ asset('images/landTitle.jpg') }}" alt="Department Emblem" class="nav-logo-img">
+        <a href="{{ route('home') }}" class="nav-logo" aria-label="{{ __('Department of Land Title Settlement Home') }}">
+            <img src="{{ asset('images/landTitle.jpg') }}" alt="{{ __('Department Emblem') }}" class="nav-logo-img">
             <div class="nav-logo-text">
-                <div class="dept">Department of Land</div>
-                <div class="dept">Title Settlement</div>
-                <div class="sub">Sri Lanka</div>
+                <div class="dept">{{ __('Department of Land') }}</div>
+                <div class="dept">{{ __('Title Settlement') }}</div>
+                <div class="sub">{{ __('Sri Lanka') }}</div>
             </div>
         </a>
 
@@ -18,20 +18,46 @@
             {{-- Home --}}
             <li class="nav-item" role="none">
                 <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}"
-                    role="menuitem" id="nav-home">HOME</a>
+                    role="menuitem" id="nav-home">{{ __('HOME') }}</a>
             </li>
 
             {{-- About Us --}}
             <li class="nav-item" role="none">
-                <a href="{{ route('about') }}" class="nav-link {{ request()->is('about*') ? 'active' : '' }}"
-                    role="menuitem" aria-haspopup="true" aria-expanded="false" id="nav-about">
-                    ABOUT US
+                <span class="nav-link">{{ __('ABOUT US') }}
+
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                     </svg>
-                </a>
-                <div class="dropdown" role="menu" aria-label="About Us submenu">
-                    <div class="dropdown-header">About the Department</div>
+
+                </span>
+                {{-- <a href="{{ route('about') }}" class="nav-link {{ request()->is('about*') ? 'active' : '' }}"
+                    role="menuitem" aria-haspopup="true" aria-expanded="false" id="nav-about">
+                    {{ __('ABOUT US') }}
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </a> --}}
+                <div class="dropdown" role="menu" aria-label="{{ __('About Us submenu') }}">
+                    <div class="dropdown-header">{{ __('About the Department') }}</div>
+
+
+                    {{-- <a href="{{ route('about') }}"
+                        class="dropdown-item {{ request()->routeIs('about') ? 'active-item' : '' }}"
+                        role="menuitem" id="nav-about-overview">
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </span>
+                        <div>
+
+                            <div style="font-weight:600;font-size:.88rem;">About</div>
+                            <div style="font-size:.75rem;color:#9ca3af;margin-top:.1rem;">{{ __('Vision, Mission & Aims') }}</div>
+                        </div>
+                    </a> --}}
+
                     <a href="{{ route('about.overview') }}"
                         class="dropdown-item {{ request()->routeIs('about.overview') ? 'active-item' : '' }}"
                         role="menuitem" id="nav-about-overview">
@@ -43,8 +69,9 @@
                             </svg>
                         </span>
                         <div>
-                            <div style="font-weight:600;font-size:.88rem;">Overview</div>
-                            <div style="font-size:.75rem;color:#9ca3af;margin-top:.1rem;">Vision, Mission & Aims</div>
+
+                            <div style="font-weight:600;font-size:.88rem;">{{ __('Overview') }}</div>
+                            <div style="font-size:.75rem;color:#9ca3af;margin-top:.1rem;">{{ __('Vision, Mission & Aims') }}</div>
                         </div>
                     </a>
                     <a href="{{ route('about.organization-chart') }}"
@@ -58,8 +85,11 @@
                             </svg>
                         </span>
                         <div>
-                            <div style="font-weight:600;font-size:.88rem;">Organization Charts</div>
-                            <div style="font-size:.75rem;color:#9ca3af;margin-top:.1rem;">Department structure & roles
+
+
+
+                            <div style="font-weight:600;font-size:.88rem;">{{ __('Organization Charts') }}</div>
+                            <div style="font-size:.75rem;color:#9ca3af;margin-top:.1rem;">{{ __('Department structure & roles') }}
                             </div>
                         </div>
                     </a>
@@ -74,8 +104,8 @@
                             </svg>
                         </span>
                         <div>
-                            <div style="font-weight:600;font-size:.88rem;">Our Aims & Objectives</div>
-                            <div style="font-size:.75rem;color:#9ca3af;margin-top:.1rem;">Key goals & statutory acts
+                            <div style="font-weight:600;font-size:.88rem;">{{ __('Our Aims & Objectives') }}</div>
+                            <div style="font-size:.75rem;color:#9ca3af;margin-top:.1rem;">{{ __('Key goals & statutory acts') }}
                             </div>
                         </div>
                     </a>
@@ -84,15 +114,24 @@
 
             {{-- Services --}}
             <li class="nav-item" role="none">
-                <a href="{{ route('services') }}" class="nav-link {{ request()->is('services*') ? 'active' : '' }}"
-                    role="menuitem" aria-haspopup="true" aria-expanded="false" id="nav-services">
-                    SERVICES
+                <span class="nav-link">{{ __('SERVICES') }}
+
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                     </svg>
-                </a>
-                <div class="dropdown" role="menu" aria-label="Services submenu">
-                    <div class="dropdown-header">Our Services</div>
+
+                </span>
+
+                {{-- <a href="{{ route('services') }}" class="nav-link {{ request()->is('services*') ? 'active' : '' }}"
+                    role="menuitem" aria-haspopup="true" aria-expanded="false" id="nav-services">
+                    {{ __('SERVICES') }}
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </a> --}}
+
+                <div class="dropdown" role="menu" aria-label="{{ __('Services submenu') }}">
+                    <div class="dropdown-header">{{ __('Our Services') }}</div>
                     <a href="{{ route('services.title-registration') }}"
                         class="dropdown-item {{ request()->routeIs('services.title-registration') ? 'active-item' : '' }}"
                         role="menuitem" id="nav-svc-title">
@@ -104,9 +143,8 @@
                             </svg>
                         </span>
                         <div>
-                            <div style="font-weight:600;font-size:.88rem;">Title Registration (Bimsaviya)</div>
-                            <div style="font-size:.75rem;color:#9ca3af;margin-top:.1rem;">Torrens title & Bim Saviya
-                                programme</div>
+                            <div style="font-weight:600;font-size:.88rem;">{{ __('Title Registration (Bimsaviya)') }}</div>
+                            <div style="font-size:.75rem;color:#9ca3af;margin-top:.1rem;">{{ __('Torrens title & Bim Saviya programme') }}</div>
                         </div>
                     </a>
                     <a href="{{ route('services.land-registration') }}"
@@ -120,9 +158,8 @@
                             </svg>
                         </span>
                         <div>
-                            <div style="font-weight:600;font-size:.88rem;">Land Registration &amp; Settlement</div>
-                            <div style="font-size:.75rem;color:#9ca3af;margin-top:.1rem;">State &amp; private land
-                                settlement</div>
+                            <div style="font-weight:600;font-size:.88rem;">{{ __('Land Registration & Settlement') }}</div>
+                            <div style="font-size:.75rem;color:#9ca3af;margin-top:.1rem;">{{ __('State & private land settlement') }}</div>
                         </div>
                     </a>
                 </div>
@@ -131,32 +168,40 @@
             {{-- News & Events --}}
             <li class="nav-item" role="none">
                 <a href="{{ route('news') }}" class="nav-link {{ request()->routeIs('news') ? 'active' : '' }}"
-                    role="menuitem" id="nav-news">NEWS &
-                    EVENTS</a>
+                    role="menuitem" id="nav-news">{{ __('NEWS & EVENTS') }}</a>
             </li>
 
             {{-- FAQ --}}
             <li class="nav-item" role="none">
-                <a href="#" class="nav-link" role="menuitem" id="nav-faq">FAQ</a>
+                <a href="{{ route('faq') }}" class="nav-link {{ request()->routeIs('faq') ? 'active' : '' }}" role="menuitem" id="nav-faq">{{ __('FAQ') }}</a>
             </li>
 
             {{-- Downloads --}}
             <li class="nav-item" role="none">
-                <a href="#" class="nav-link" role="menuitem" id="nav-downloads">DOWNLOADS</a>
+                <a href="#" class="nav-link" role="menuitem" id="nav-downloads">{{ __('DOWNLOADS') }}</a>
             </li>
 
             {{-- Contact Us --}}
             <li class="nav-item" role="none">
-                <a href="{{ route('contact.inquiry') }}"
+                <span class="nav-link">{{ __('CONTACT US') }}
+
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+
+                </span>
+
+                {{-- <a href="{{ route('contact.inquiry') }}"
                     class="nav-link {{ request()->is('contact*') ? 'active' : '' }}" role="menuitem"
                     aria-haspopup="true" aria-expanded="false" id="nav-contact">
-                    CONTACT US
+                    {{ __('CONTACT US') }}
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                     </svg>
-                </a>
-                <div class="dropdown" role="menu" aria-label="Contact Us submenu">
-                    <div class="dropdown-header">Get In Touch</div>
+                </a> --}}
+                <div class="dropdown" role="menu" aria-label="{{ __('Contact Us submenu') }}">
+                    <div class="dropdown-header">{{ __('Get In Touch') }}</div>
                     <a href="{{ route('contact.inquiry') }}"
                         class="dropdown-item {{ request()->routeIs('contact.inquiry') ? 'active-item' : '' }}"
                         role="menuitem" id="nav-contact-inquiry">
@@ -168,8 +213,8 @@
                             </svg>
                         </span>
                         <div>
-                            <div style="font-weight:600;font-size:.88rem;">Inquiry</div>
-                            <div style="font-size:.75rem;color:#9ca3af;margin-top:.1rem;">Submit a query or complaint
+                            <div style="font-weight:600;font-size:.88rem;">{{ __('Inquiry') }}</div>
+                            <div style="font-size:.75rem;color:#9ca3af;margin-top:.1rem;">{{ __('Submit a query or complaint') }}
                             </div>
                         </div>
                     </a>
@@ -184,8 +229,8 @@
                             </svg>
                         </span>
                         <div>
-                            <div style="font-weight:600;font-size:.88rem;">Head Office</div>
-                            <div style="font-size:.75rem;color:#9ca3af;margin-top:.1rem;">Battaramulla headquarters
+                            <div style="font-weight:600;font-size:.88rem;">{{ __('Head Office') }}</div>
+                            <div style="font-size:.75rem;color:#9ca3af;margin-top:.1rem;">{{ __('Battaramulla headquarters') }}
                             </div>
                         </div>
                     </a>
@@ -200,8 +245,8 @@
                             </svg>
                         </span>
                         <div>
-                            <div style="font-weight:600;font-size:.88rem;">Regional Offices</div>
-                            <div style="font-size:.75rem;color:#9ca3af;margin-top:.1rem;">Offices across all districts
+                            <div style="font-weight:600;font-size:.88rem;">{{ __('Regional Offices') }}</div>
+                            <div style="font-size:.75rem;color:#9ca3af;margin-top:.1rem;">{{ __('Offices across all districts') }}
                             </div>
                         </div>
                     </a>
@@ -216,14 +261,19 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
-                    FIND STATUS
+                    {{ __('FIND LAND') }}
                 </a>
+            </li>
+
+            {{-- Language (mobile menu only – on desktop it is in the top bar) --}}
+            <li class="nav-item nav-language" role="none">
+                @include('partials.language-switcher', ['variant' => 'menu'])
             </li>
 
         </ul>
 
         {{-- Hamburger --}}
-        <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle navigation menu" aria-expanded="false"
+        <button class="nav-hamburger" id="nav-hamburger" aria-label="{{ __('Toggle navigation menu') }}" aria-expanded="false"
             aria-controls="nav-menu">
             <span></span>
             <span></span>

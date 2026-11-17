@@ -1,25 +1,25 @@
 {{-- Footer --}}
-<footer class="footer" id="footer" role="contentinfo" aria-label="Site footer">
+<footer class="footer" id="footer" role="contentinfo" aria-label="{{ __('Site footer') }}">
     <div class="container">
         <div class="footer-grid">
 
             {{-- Col 1: Logo + Contact --}}
             <div class="footer-logo-col">
                 <div class="footer-logo">
-                    <img src="{{ asset('images/landTitle.jpg') }}" alt="Department Emblem" class="footer-logo-img">
+                    <img src="{{ asset('images/landTitle.jpg') }}" alt="{{ __('Department Emblem') }}" class="footer-logo-img">
                     <div class="footer-logo-text">
-                        <div class="dept">Department of Land</div>
-                        <div class="dept">Title Settlement</div>
-                        <div class="sub">Sri Lanka</div>
+                        <div class="dept">{{ __('Department of Land') }}</div>
+                        <div class="dept">{{ __('Title Settlement') }}</div>
+                        <div class="sub">{{ __('Sri Lanka') }}</div>
                     </div>
                 </div>
                 <p class="footer-tagline">
-                    Securing land ownership rights for every Sri Lankan citizen through transparent and accessible land management services.
+                    {{ __('Securing land ownership rights for every Sri Lankan citizen through transparent and accessible land management services.') }}
                 </p>
                 <div class="footer-contact-info">
                     <div class="footer-contact-item">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                        No 1200/6, Mihikatha Medura, Rajamalwatta Road, Battaramulla, Sri Lanka
+                        {{ __('No 1200/6, Mihikatha Medura, Rajamalwatta Road, Battaramulla, Sri Lanka') }}
                     </div>
                     <div class="footer-contact-item">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
@@ -30,7 +30,7 @@
                         info@landsettledept.gov.lk
                     </div>
                 </div>
-                <div class="social-links" aria-label="Social media links">
+                <div class="social-links" aria-label="{{ __('Social media links') }}">
                     <a href="#" class="social-btn" aria-label="Facebook" id="social-facebook">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
                     </a>
@@ -48,16 +48,16 @@
 
             {{-- Col 2: Related Links --}}
             <div>
-                <h3 class="footer-col-title">Related Links</h3>
-                <nav class="footer-links" aria-label="Related links">
+                <h3 class="footer-col-title">{{ __('Related Links') }}</h3>
+                <nav class="footer-links" aria-label="{{ __('Related links') }}">
                     @php
                         $relatedLinks = [
-                            'Land Commissioner General\'s Department',
-                            'Ministry of Land and Land Development',
-                            'Survey Department',
-                            'Registrar General\'s Department',
-                            'Department of Government Printing',
-                            'Official Facebook Page',
+                            __('Land Commissioner General\'s Department'),
+                            __('Ministry of Land and Land Development'),
+                            __('Survey Department'),
+                            __('Registrar General\'s Department'),
+                            __('Department of Government Printing'),
+                            __('Official Facebook Page'),
                         ];
                     @endphp
                     @foreach($relatedLinks as $link)
@@ -71,22 +71,22 @@
 
             {{-- Col 3: Quick Nav --}}
             <div>
-                <h3 class="footer-col-title">Quick Navigation</h3>
-                <nav class="footer-links" aria-label="Quick navigation">
+                <h3 class="footer-col-title">{{ __('Quick Navigation') }}</h3>
+                <nav class="footer-links" aria-label="{{ __('Quick navigation') }}">
                     @php
                         $quickNav = [
-                            ['label' => 'Home',                   'href' => route('home')],
-                            ['label' => 'About Us – Overview',    'href' => route('about.overview')],
-                            ['label' => 'Organization Charts',    'href' => route('about.organization-chart')],
-                            ['label' => 'Our Aims & Objectives',  'href' => route('about.aims')],
-                            ['label' => 'Title Registration (Bimsaviya)',     'href' => route('services.title-registration')],
-                            ['label' => 'Land Registration & Settlement',        'href' => route('services.land-registration')],
-                            ['label' => 'News & Events',          'href' => route('home') . '#news-events'],
-                            ['label' => 'FAQ',                    'href' => '#'],
-                            ['label' => 'Downloads',              'href' => '#'],
-                            ['label' => 'Head Office',            'href' => '#'],
-                            ['label' => 'Regional Offices',       'href' => '#'],
-                            ['label' => 'Inquiry',                'href' => '#'],
+                            ['label' => __('Home'),                   'href' => route('home')],
+                            ['label' => __('About Us – Overview'),    'href' => route('about.overview')],
+                            ['label' => __('Organization Charts'),    'href' => route('about.organization-chart')],
+                            ['label' => __('Our Aims & Objectives'),  'href' => route('about.aims')],
+                            ['label' => __('Title Registration (Bimsaviya)'),     'href' => route('services.title-registration')],
+                            ['label' => __('Land Registration & Settlement'),        'href' => route('services.land-registration')],
+                            ['label' => __('News & Events'),          'href' => route('news')],
+                            ['label' => __('FAQ'),                    'href' => route('faq')],
+                            ['label' => __('Downloads'),              'href' => '#'],
+                            ['label' => __('Head Office'),            'href' => route('contact.head-office')],
+                            ['label' => __('Regional Offices'),       'href' => route('contact.regional-office')],
+                            ['label' => __('Inquiry'),                'href' => route('contact.inquiry')],
                         ];
                     @endphp
                     @foreach($quickNav as $nav)
@@ -100,25 +100,25 @@
 
             {{-- Col 4: Map --}}
             <div class="footer-map-col">
-                <h3 class="footer-col-title">Find Us</h3>
-                <div class="footer-map" aria-label="Department location map">
+                <h3 class="footer-col-title">{{ __('Find Us') }}</h3>
+                <div class="footer-map" aria-label="{{ __('Department location map') }}">
                     <iframe
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.798!2d79.9184!3d6.9271!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25987b06f02d3%3A0x7ef7a490d2a40e82!2sMinistry%20of%20Lands!5e0!3m2!1sen!2slk!4v1"
                         allowfullscreen=""
                         loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade"
-                        title="Department of Land Title Settlement location"
+                        title="{{ __('Department of Land Title Settlement location') }}"
                     ></iframe>
                 </div>
                 <div class="map-address">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
-                    No 1200/6, Mihikatha Medura, Rajamalwatta Road, Battaramulla, Sri Lanka
+                    {{ __('No 1200/6, Mihikatha Medura, Rajamalwatta Road, Battaramulla, Sri Lanka') }}
                 </div>
 
                 <div style="margin-top:1.25rem;">
                     <div class="visitors-badge">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:13px;height:13px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                        Visitors: <strong>106,661+</strong>
+                        {!! __('Visitors: <strong>106,661+</strong>') !!}
                     </div>
                 </div>
             </div>
@@ -131,13 +131,13 @@
         <div class="container">
             <div class="footer-bottom">
                 <p class="footer-bottom-text">
-                    &copy; {{ date('Y') }} Department of Land Title Settlement, Sri Lanka. All rights reserved.
+                    &copy; {{ date('Y') }} {{ __('Department of Land Title Settlement, Sri Lanka. All rights reserved.') }}
                 </p>
                 <div class="footer-bottom-links">
-                    <a href="#" class="footer-bottom-link">Privacy Policy</a>
-                    <a href="#" class="footer-bottom-link">Terms of Use</a>
-                    <a href="#" class="footer-bottom-link">Accessibility</a>
-                    <a href="#" class="footer-bottom-link">Sitemap</a>
+                    <a href="#" class="footer-bottom-link">{{ __('Privacy Policy') }}</a>
+                    <a href="#" class="footer-bottom-link">{{ __('Terms of Use') }}</a>
+                    <a href="#" class="footer-bottom-link">{{ __('Accessibility') }}</a>
+                    <a href="#" class="footer-bottom-link">{{ __('Sitemap') }}</a>
                 </div>
             </div>
         </div>

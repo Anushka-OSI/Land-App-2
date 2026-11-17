@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
-@section('title', 'Contact Us – Inquiry | Department of Land Title Settlement')
+@section('title', __('Contact Us – Inquiry | Department of Land Title Settlement'))
 
 @section('content')
 
     {{-- Banner --}}
     @include('partials.page-banner', [
-        'title' => 'Contact Us – Inquiry',
-        'subtitle' => 'Get in touch with the Department of Land Title Settlement',
-        'parent' => 'Contact Us',
+        'title' => __('Contact Us – Inquiry'),
+        'subtitle' => __('Get in touch with the Department of Land Title Settlement'),
+        'parent' => __('Contact Us'),
         'parentUrl' => route('contact.inquiry'),
         'showContactnav' => true
     ])
@@ -36,11 +36,9 @@
                     <div>
                         <h4
                             style="font-family:var(--font-heading); color:var(--green-800); font-size:1.1rem; margin-bottom:.35rem;">
-                            Head Office Address</h4>
+                            {{ __('Head Office Address') }}</h4>
                         <p style="color:var(--gray-600); font-size:.92rem; line-height:1.6; margin:0;">
-                            Department of Land Title Settlement,<br>
-                            1200/7, Rajamalwatta Road,<br>
-                            Battaramulla, Sri Lanka.
+                            {!! __('Department of Land Title Settlement,<br> 1200/7, Rajamalwatta Road,<br> Battaramulla, Sri Lanka.') !!}
                         </p>
                     </div>
                 </div>
@@ -59,10 +57,9 @@
                     <div>
                         <h4
                             style="font-family:var(--font-heading); color:var(--green-800); font-size:1.1rem; margin-bottom:.35rem;">
-                            Contact Numbers</h4>
+                            {{ __('Contact Numbers') }}</h4>
                         <p style="color:var(--gray-600); font-size:.92rem; line-height:1.8; margin:0;">
-                            <strong>General:</strong> +94 11 2888 935<br>
-                            <strong>Fax:</strong> +94 11 2888 937
+                            {!! __('<strong>General:</strong> +94 11 2888 935<br> <strong>Fax:</strong> +94 11 2888 937') !!}
                         </p>
                     </div>
                 </div>
@@ -81,7 +78,7 @@
                     <div>
                         <h4
                             style="font-family:var(--font-heading); color:var(--green-800); font-size:1.1rem; margin-bottom:.35rem;">
-                            Email Address</h4>
+                            {{ __('Email Address') }}</h4>
                         <p style="color:var(--gray-600); font-size:.92rem; line-height:1.8; margin:0;">
                             <a href="mailto:info@landtitle.gov.lk"
                                 style="color:var(--green-600); font-weight:600;">info@landtitle.gov.lk</a>
@@ -113,9 +110,8 @@
                             </div>
                             <h2
                                 style="font-family:var(--font-heading); color:var(--green-800); font-size:2rem; margin-bottom:.5rem;">
-                                Send Us an Inquiry</h2>
-                            <p style="color:var(--gray-500); font-size:1rem;">Fill out the form below and our team will
-                                respond within 3–5 working days</p>
+                                {{ __('Send Us an Inquiry') }}</h2>
+                            <p style="color:var(--gray-500); font-size:1rem;">{{ __('Fill out the form below and our team will respond within 3–5 working days') }}</p>
                         </div>
 
                         {{-- Success Flash --}}
@@ -150,18 +146,16 @@
                             <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:1.5rem;">
                                 <div>
                                     <label for="full_name"
-                                        style="display:block; font-family:var(--font-accent); font-weight:600; font-size:.82rem; color:var(--gray-700); margin-bottom:.45rem; text-transform:uppercase; letter-spacing:.05em;">Full
-                                        Name <span style="color:#dc2626;">*</span></label>
+                                        style="display:block; font-family:var(--font-accent); font-weight:600; font-size:.82rem; color:var(--gray-700); margin-bottom:.45rem; text-transform:uppercase; letter-spacing:.05em;">{{ __('Full Name') }} <span style="color:#dc2626;">*</span></label>
                                     <input type="text" id="full_name" name="full_name" value="{{ old('full_name') }}"
-                                        required placeholder="e.g. W. A. Samarathunga"
+                                        required placeholder="{{ __('e.g. W. A. Samarathunga') }}"
                                         style="width:100%; padding:.85rem 1rem; border:1px solid var(--gray-200); border-radius:var(--radius-md); font-family:var(--font-body); font-size:.95rem; outline:none; transition:var(--transition-fast); background:var(--gray-50);">
                                 </div>
                                 <div>
                                     <label for="email"
-                                        style="display:block; font-family:var(--font-accent); font-weight:600; font-size:.82rem; color:var(--gray-700); margin-bottom:.45rem; text-transform:uppercase; letter-spacing:.05em;">Email
-                                        Address <span style="color:#dc2626;">*</span></label>
+                                        style="display:block; font-family:var(--font-accent); font-weight:600; font-size:.82rem; color:var(--gray-700); margin-bottom:.45rem; text-transform:uppercase; letter-spacing:.05em;">{{ __('Email Address') }} <span style="color:#dc2626;">*</span></label>
                                     <input type="email" id="email" name="email" value="{{ old('email') }}" required
-                                        placeholder="e.g. your@email.com"
+                                        placeholder="{{ __('e.g. your@email.com') }}"
                                         style="width:100%; padding:.85rem 1rem; border:1px solid var(--gray-200); border-radius:var(--radius-md); font-family:var(--font-body); font-size:.95rem; outline:none; transition:var(--transition-fast); background:var(--gray-50);">
                                 </div>
                             </div>
@@ -170,23 +164,22 @@
                             <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:1.5rem;">
                                 <div>
                                     <label for="subject"
-                                        style="display:block; font-family:var(--font-accent); font-weight:600; font-size:.82rem; color:var(--gray-700); margin-bottom:.45rem; text-transform:uppercase; letter-spacing:.05em;">Subject
+                                        style="display:block; font-family:var(--font-accent); font-weight:600; font-size:.82rem; color:var(--gray-700); margin-bottom:.45rem; text-transform:uppercase; letter-spacing:.05em;">{{ __('Subject') }}
                                         <span style="color:#dc2626;">*</span></label>
                                     <input type="text" id="subject" name="subject" value="{{ old('subject') }}" required
-                                        placeholder="e.g. Title Certificate Inquiry"
+                                        placeholder="{{ __('e.g. Title Certificate Inquiry') }}"
                                         style="width:100%; padding:.85rem 1rem; border:1px solid var(--gray-200); border-radius:var(--radius-md); font-family:var(--font-body); font-size:.95rem; outline:none; transition:var(--transition-fast); background:var(--gray-50);">
                                 </div>
                                 <div>
                                     <label for="office"
-                                        style="display:block; font-family:var(--font-accent); font-weight:600; font-size:.82rem; color:var(--gray-700); margin-bottom:.45rem; text-transform:uppercase; letter-spacing:.05em;">Relevant
-                                        Office <span style="color:#dc2626;">*</span></label>
+                                        style="display:block; font-family:var(--font-accent); font-weight:600; font-size:.82rem; color:var(--gray-700); margin-bottom:.45rem; text-transform:uppercase; letter-spacing:.05em;">{{ __('Relevant Office') }} <span style="color:#dc2626;">*</span></label>
                                     <select id="office" name="office" required
                                         style="width:100%; padding:.85rem 1rem; border:1px solid var(--gray-200); border-radius:var(--radius-md); font-family:var(--font-body); font-size:.95rem; outline:none; transition:var(--transition-fast); background:var(--gray-50); cursor:pointer; color:var(--gray-700); appearance:none; background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22%236b7280%22><path fill-rule=%22evenodd%22 d=%22M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z%22 clip-rule=%22evenodd%22/></svg>'); background-repeat:no-repeat; background-position:right .8rem center; background-size:16px; padding-right:2.5rem;">
-                                        <option value="" disabled {{ old('office') ? '' : 'selected' }}>Select an office…
+                                        <option value="" disabled {{ old('office') ? '' : 'selected' }}>{{ __('Select an office…') }}
                                         </option>
-                                        @foreach($offices as $office)
-                                            <option value="{{ $office }}" {{ old('office') === $office ? 'selected' : '' }}>
-                                                {{ $office }}
+                                        @foreach($offices as $value => $label)
+                                            <option value="{{ $value }}" {{ old('office') === $value ? 'selected' : '' }}>
+                                                {{ $label }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -196,10 +189,10 @@
                             {{-- Row 3: Message --}}
                             <div style="margin-bottom:2rem;">
                                 <label for="message"
-                                    style="display:block; font-family:var(--font-accent); font-weight:600; font-size:.82rem; color:var(--gray-700); margin-bottom:.45rem; text-transform:uppercase; letter-spacing:.05em;">Message
+                                    style="display:block; font-family:var(--font-accent); font-weight:600; font-size:.82rem; color:var(--gray-700); margin-bottom:.45rem; text-transform:uppercase; letter-spacing:.05em;">{{ __('Message') }}
                                     <span style="color:#dc2626;">*</span></label>
                                 <textarea id="message" name="message" rows="6" required
-                                    placeholder="Describe your inquiry in detail…"
+                                    placeholder="{{ __('Describe your inquiry in detail…') }}"
                                     style="width:100%; padding:1rem; border:1px solid var(--gray-200); border-radius:var(--radius-md); font-family:var(--font-body); font-size:.95rem; outline:none; transition:var(--transition-fast); background:var(--gray-50); resize:vertical; min-height:140px;">{{ old('message') }}</textarea>
                             </div>
 
@@ -207,7 +200,7 @@
                             <div style="text-align:center;">
                                 <button type="submit" class="btn btn-primary"
                                     style="padding:1rem 3rem; font-size:1.05rem; width:100%; justify-content:center;">
-                                    Submit Inquiry
+                                    {{ __('Submit Inquiry') }}
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke="currentColor" style="width:20px;height:20px;">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
