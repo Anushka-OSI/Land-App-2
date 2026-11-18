@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RegionalOffice;
+use App\Support\HeadOfficeDetails;
+use App\Support\OfficeLocations;
+
 
 class HomeController extends Controller
 {
@@ -12,7 +16,6 @@ class HomeController extends Controller
             ['value' => 2800000, 'label' => __('Land Parcels Registered'), 'icon' => 'map', 'suffix' => '+'],
             ['value' => 25, 'label' => __('Districts Covered'), 'icon' => 'globe', 'suffix' => ''],
             ['value' => 26, 'label' => __('Years of Service'), 'icon' => 'calendar', 'suffix' => '+'],
-            ['value' => 48, 'label' => __('Regional Offices'), 'icon' => 'building', 'suffix' => '+'],
         ];
 
         // Organizations Data
@@ -28,6 +31,13 @@ class HomeController extends Controller
         // Homepage slideshow – the latest 5 published news, notices and events (automatic)
         $latestNews = NewsController::homepageItems(NewsController::contentLanguage(request()), 5);
 
-        return view('home', compact('stats', 'organizations', 'latestNews'));
+        // Office map – every office the admin has placed on the map, plus the office counts
+        $officeMap = [
+            'offices' => OfficeLocations::all(),
+            'headCount' => HeadOfficeDetails::text('name', 'en') ? 1 : 0,
+            'regionalCount' => RegionalOffice::published()->count(),
+        ];
+
+        return view('home', compact('stats', 'organizations', 'latestNews', 'officeMap'));
     }
 }

@@ -28,8 +28,11 @@
                 @forelse($news as $item)
                     <tr>
                         <td lang="{{ $item->displayLanguage() }}">
-                            <a href="{{ route('admin.news.edit', $item) }}" class="cell-title">{{ $item->title }}</a>
+                            <a href="{{ route('admin.news.show', $item) }}" class="cell-title">{{ $item->title }}</a>
                             <div class="cell-sub">{{ \Illuminate\Support\Str::limit($item->excerpt, 90) }}</div>
+                            @if($item->documents_count)
+                                <div class="cell-sub">📎 {{ $item->documents_count }} {{ \Illuminate\Support\Str::plural('document', $item->documents_count) }}</div>
+                            @endif
                         </td>
                         <td class="nowrap">@include('admin.partials.language-badges', ['item' => $item])</td>
                         <td class="nowrap">{{ $item->published_at->format('M j, Y') }}</td>
@@ -39,6 +42,7 @@
                             </span>
                         </td>
                         <td class="actions-col">
+                            <a href="{{ route('admin.news.show', $item) }}" class="btn btn-light btn-sm">View</a>
                             <a href="{{ route('admin.news.edit', $item) }}" class="btn btn-light btn-sm">Edit</a>
                             <form method="POST" action="{{ route('admin.news.destroy', $item) }}" class="inline"
                                 data-confirm="Delete &quot;{{ $item->title }}&quot;? This cannot be undone.">

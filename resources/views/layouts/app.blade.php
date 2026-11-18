@@ -18,6 +18,7 @@
     {{-- App CSS --}}
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/language.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/event-calendar.css') }}">
 
     @stack('styles')
 </head>
@@ -39,6 +40,9 @@
         @yield('content')
     </main>
 
+    {{-- Event Calendar: tab on the right side of every page, opens a full-screen calendar --}}
+    @include('partials.event-calendar')
+
     {{-- Related Government Organizations (Global across all pages) --}}
     @include('partials.organizations')
 
@@ -52,6 +56,7 @@
 
     {{-- App JS --}}
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/event-calendar.js') }}" defer></script>
     @stack('scripts')
 </body>
 </html>

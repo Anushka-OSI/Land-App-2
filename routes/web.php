@@ -8,6 +8,7 @@ use App\Http\Controllers\FindController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\Admin;
 
 /*
@@ -35,7 +36,15 @@ Route::post('/faq/ask', [FaqController::class, 'ask'])
 // News & Events
 Route::get('/news', [NewsController::class, 'index'])->name('news');
 Route::get('/news/{news}', [NewsController::class, 'show'])->whereNumber('news')->name('news.show');
+Route::get('/news/{news}/documents/{document}', [NewsController::class, 'document'])
+    ->whereNumber(['news', 'document'])
+    ->name('news.documents.show');
 Route::get('/events/{event}', [NewsController::class, 'showEvent'])->whereNumber('event')->name('events.show');
+
+// Event Calendar (shown on every page) – month data
+Route::get('/calendar/month', [CalendarController::class, 'month'])
+    ->middleware('throttle:120,1')
+    ->name('calendar.month');
 
 // About Us & Subcategories
 Route::prefix('about')->name('about')->group(function () {
@@ -82,9 +91,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/', [Admin\DashboardController::class, 'index'])->name('dashboard');
 
-        Route::resource('news', Admin\NewsController::class)->except('show');
-        Route::resource('events', Admin\EventController::class)->except('show');
+        Route::resource('news', Admin\NewsController::class);
+        Route::resource('events', Admin\EventController::class);
         Route::resource('faqs', Admin\FaqController::class)->except('show');
+        Route::post('/calendar/sync', [Admin\CalendarController::class, 'sync'])->name('calendar.sync');
+        Route::patch('/calendar/{calendar}/visibility', [Admin\CalendarController::class, 'toggleVisibility'])->name('calendar.visibility');
+        Route::resource('calendar', Admin\CalendarController::class)->except('show');
+        Route::get('/head-office-details', [Admin\HeadOfficeDetailsController::class, 'edit'])->name('head-office-details.edit');
+        Route::put('/head-office-details', [Admin\HeadOfficeDetailsController::class, 'update'])->name('head-office-details.update');
+        Route::resource('head-office', Admin\HeadOfficeDivisionController::class)->except('show');
+        Route::resource('regional-offices', Admin\RegionalOfficeController::class)->except('show');
 
         Route::get('/messages', [Admin\MessageController::class, 'index'])->name('messages.index');
         Route::get('/messages/{message}', [Admin\MessageController::class, 'show'])->name('messages.show');

@@ -41,4 +41,10 @@ return [
         'nic_path' => env('ETITLE_NIC_PATH'),
     ],
 
+    // Sri Lankan public holidays and Poya days for the event calendar (iCalendar feed).
+    // Leave empty to use the public "Holidays in Sri Lanka" Google calendar.
+    'holiday_calendar' => [
+        'url' => env('HOLIDAY_CALENDAR_URL'),
+    ],
+
 ];

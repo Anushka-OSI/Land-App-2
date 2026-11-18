@@ -12,7 +12,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        // Public holidays and Poya days on the event calendar
+        $schedule->command('calendar:sync-holidays')->dailyAt('02:30')->withoutOverlapping();
     }
 
     /**

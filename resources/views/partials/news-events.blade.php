@@ -3,6 +3,7 @@
     $newsCards = $news->map(fn ($n) => [
         'kind' => 'news', 'title' => $n->t('title', $lang), 'excerpt' => $n->t('excerpt', $lang), 'date' => $n->published_at,
         'language' => $n->displayLanguage($lang), 'url' => route('news.show', $n), 'image' => null, 'images_count' => 0,
+        'documents_count' => $n->documents_count ?? 0,
     ]);
     // Event photos belong to one language – use the photos of the language being shown (may be none)
     $eventCards = $events->map(function ($e) use ($lang) {

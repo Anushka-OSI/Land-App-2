@@ -1,5 +1,5 @@
-{{-- Mission & Vision Section --}}
-<section class="mission-section" id="mission-vision" aria-label="{{ __('Mission and Vision') }}">
+{{-- Our Purpose (homepage) --}}
+<section class="mission-section" id="mission-vision" aria-label="{{ __('Our Purpose') }}">
     <div class="container">
         <div class="mission-grid">
 
@@ -10,30 +10,6 @@
                 <p class="mission-intro reveal">
                     {{ __('The Department of Land Title Settlement is committed to providing transparent, efficient, and accessible land services for every Sri Lankan citizen.') }}
                 </p>
-
-                <div class="mv-cards">
-                    {{-- Mission --}}
-                    <div class="mv-card reveal" id="mission-card">
-                        <div class="mv-card-label">{{ __('Our Mission') }}</div>
-                        <div class="mv-card-icon" aria-hidden="true">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                        </div>
-                        <p class="mv-card-text">
-                            {{ __('To contribute to establish an improved Land Management System in Sri Lanka through the process of Land Settlement and Title Registration that determines the ownership of state owned and private lands and confirm the title of every land parcel.') }}
-                        </p>
-                    </div>
-
-                    {{-- Vision --}}
-                    <div class="mv-card reveal" id="vision-card">
-                        <div class="mv-card-label">{{ __('Our Vision') }}</div>
-                        <div class="mv-card-icon" aria-hidden="true">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                        </div>
-                        <p class="mv-card-text">
-                            {!! __('<strong style="color:#dbb84a;">"A settled Title for every land"</strong> — Ensuring that every land parcel in Sri Lanka has a clear, legally recognized and registered title.') !!}
-                        </p>
-                    </div>
-                </div>
             </div>
 
             {{-- Visual Column --}}

@@ -63,3 +63,19 @@ Artisan::command('admin:create {--name=} {--email=}', function () {
 
     return 0;
 })->purpose('Create an admin user for the admin dashboard');
+
+Artisan::command('calendar:sync-holidays', function (\App\Services\SriLankaHolidaySync $sync) {
+    $this->info('Downloading Sri Lankan public holidays and Poya days...');
+
+    try {
+        $counts = $sync->sync();
+    } catch (\Throwable $e) {
+        $this->error('Sync failed: ' . $e->getMessage());
+
+        return 1;
+    }
+
+    $this->info("Done. Added {$counts['added']}, updated {$counts['updated']}, removed {$counts['removed']}.");
+
+    return 0;
+})->purpose('Update the event calendar with Sri Lankan public holidays and Poya days');

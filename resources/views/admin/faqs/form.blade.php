@@ -14,23 +14,23 @@
         @endif
 
         <div class="form-group">
-            <label for="question">Question</label>
+            <label for="question">Question <span class="hint">(English)</span></label>
             <input type="text" id="question" name="question" value="{{ old('question', $faq->question) }}"
                 maxlength="255" class="form-input @error('question') is-invalid @enderror">
             @error('question') <small class="form-error">{{ $message }}</small> @enderror
         </div>
 
         <div class="form-group">
-            <label for="answer">Answer</label>
+            <label for="answer">Answer <span class="hint">(English)</span></label>
             <textarea id="answer" name="answer" rows="6"
                 class="form-input @error('answer') is-invalid @enderror">{{ old('answer', $faq->answer) }}</textarea>
             @error('answer') <small class="form-error">{{ $message }}</small> @enderror
         </div>
 
-        {{-- Optional translations – the English text is shown on the website when these are empty --}}
+        {{-- Sinhala and Tamil versions – required, every FAQ is added in all 3 languages --}}
         @foreach(['si' => 'Sinhala (සිංහල)', 'ta' => 'Tamil (தமிழ்)'] as $lang => $languageName)
             <fieldset class="form-group faq-translation">
-                <legend>{{ $languageName }} <span class="hint">(optional – English is shown if left empty)</span></legend>
+                <legend>{{ $languageName }} <span class="hint">(required)</span></legend>
 
                 <div class="form-group">
                     <label for="question_{{ $lang }}">Question in {{ $languageName }}</label>

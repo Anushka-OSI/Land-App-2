@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\News;
+use App\Models\NewsDocument;
 use App\Support\Languages;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * Public "News & Events" pages.
@@ -19,7 +22,7 @@ class NewsController extends Controller
     {
         $lang = self::contentLanguage($request);
 
-        $news = News::published()->get();
+        $news = News::published()->withCount('documents')->get();
         $events = Event::published()->with('images')->get();
 
         return view('news.index', compact('news', 'events', 'lang'));
@@ -30,9 +33,32 @@ class NewsController extends Controller
         abort_unless($news->is_published, 404);
 
         $lang = self::contentLanguage($request);
+        $news->load('documents');
         $related = News::published()->whereKeyNot($news->id)->take(3)->get();
 
         return view('news.show', ['item' => $news, 'related' => $related, 'lang' => $lang]);
+    }
+
+    /**
+     * A document attached to a News item: opens in the browser (PDF, images, text),
+     * or downloads with ?download=1 (and always for Word, Excel …).
+     * Documents of unpublished items can only be opened by an admin.
+     */
+    public function document(Request $request, News $news, NewsDocument $document): StreamedResponse
+    {
+        abort_unless((int) $document->news_id === (int) $news->id, 404);
+        abort_unless($news->is_published || $request->user()?->is_admin, 404);
+
+        $disk = Storage::disk(NewsDocument::DISK);
+        abort_unless($disk->exists($document->path), 404);
+
+        $inline = $document->canView() && ! $request->boolean('download');
+
+        return $disk->response($document->path, $document->downloadName(), [
+            'Content-Type' => $document->contentType(),
+            'X-Content-Type-Options' => 'nosniff',
+            'Cache-Control' => $news->is_published ? 'public, max-age=3600' : 'private, no-store',
+        ], $inline ? 'inline' : 'attachment');
     }
 
     public function showEvent(Request $request, Event $event)

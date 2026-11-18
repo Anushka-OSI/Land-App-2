@@ -40,7 +40,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     </svg>
-                    <span>{!! __('<strong>:count</strong> Offices across <strong>:provinces</strong> Provinces', ['count' => count($districts), 'provinces' => 9]) !!}</span>
+                    <span>{!! __('<strong>:count</strong> Offices across <strong>:provinces</strong> Provinces', ['count' => count($districts), 'provinces' => $provinceCount]) !!}</span>
                 </div>
             </div>
 
@@ -68,7 +68,7 @@
 
                     <div class="ro-offices-grid">
                         @foreach($offices as $office)
-                            <div class="ro-office-card"
+                            <div class="ro-office-card" id="{{ $office['anchor'] }}"
                                 data-search="{{ strtolower($office['office'] . ' ' . $province . ' ' . $office['address']) }}">
                                 <div class="ro-office-card-top"></div>
                                 <div class="ro-office-card-body">
@@ -116,12 +116,34 @@
                                             <a href="mailto:{{ $office['email'] }}">{{ $office['email'] }}</a>
                                         </div>
                                     </div>
+
+                                    {{-- Location (Admin → Regional Offices) --}}
+                                    @if($office['location'])
+                                        @include('partials.leaflet')
+                                        <div class="office-location">
+                                            <div class="office-location-map" data-location-map
+                                                data-lat="{{ $office['location'][0] }}" data-lng="{{ $office['location'][1] }}"
+                                                data-name="{{ $office['office'] }}" role="region" aria-label="{{ __('Map: :name', ['name' => $office['office']]) }}"></div>
+                                            <a class="office-directions" target="_blank" rel="noopener"
+                                                href="{{ \App\Support\OfficeLocations::directionsUrl($office['location'][0], $office['location'][1]) }}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+                                                {{ __('Get directions') }}
+                                            </a>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         @endforeach
                     </div>
                 </div>
             @endforeach
+
+            @if(empty($districts))
+                {{-- No offices added yet (Admin → Regional Offices) --}}
+                <div class="ro-no-results" style="display:block;">
+                    <h3>{{ __('Regional office details will be available soon.') }}</h3>
+                </div>
+            @endif
 
             {{-- No results message --}}
             <div class="ro-no-results" id="ro-no-results" style="display: none;">

@@ -16,8 +16,9 @@
     <div class="contact-page-content">
         <div class="container">
 
-            {{-- Head Office Address Card --}}
-            <div class="ho-address-strip reveal">
+            {{-- Head Office Address Card (Admin → Head Office → Office details) --}}
+            @if($headOffice['name'] || $headOffice['address'] || $headOffice['phone'] || $headOffice['fax'] || $headOffice['email'])
+            <div class="ho-address-strip reveal" id="head-office">
                 <div class="ho-addr-card">
                     <div class="ho-addr-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -27,16 +28,42 @@
                         </svg>
                     </div>
                     <div class="ho-addr-details">
-                        <h3>{{ __('Department of Land Title Settlement – Head Office') }}</h3>
-                        <p>{{ __('1200/7, Rajamalwatta Road, Battaramulla, Sri Lanka') }}</p>
+                        @if($headOffice['name'])
+                            <h3>{{ $headOffice['name'] }}</h3>
+                        @endif
+                        @if($headOffice['address'])
+                            <p>{{ $headOffice['address'] }}</p>
+                        @endif
                     </div>
                     <div class="ho-addr-contact">
-                        <span>{!! __('<strong>General:</strong> 011-2888935') !!}</span>
-                        <span>{!! __('<strong>Fax:</strong> 011-2888937') !!}</span>
-                        <span>{!! __('<strong>Email:</strong> info@landtitle.gov.lk') !!}</span>
+                        @if($headOffice['phone'])
+                            <span><strong>{{ __('General') }}:</strong> <a href="tel:{{ $headOffice['phone'] }}">{{ $headOffice['phone'] }}</a></span>
+                        @endif
+                        @if($headOffice['fax'])
+                            <span><strong>{{ __('Fax') }}:</strong> {{ $headOffice['fax'] }}</span>
+                        @endif
+                        @if($headOffice['email'])
+                            <span><strong>{{ __('Email') }}:</strong> <a href="mailto:{{ $headOffice['email'] }}">{{ $headOffice['email'] }}</a></span>
+                        @endif
                     </div>
                 </div>
+
+                {{-- Location (Admin → Head Office → Office details) --}}
+                @if($headOffice['location'])
+                    @include('partials.leaflet')
+                    <div class="office-location office-location--wide">
+                        <div class="office-location-map" data-location-map
+                            data-lat="{{ $headOffice['location'][0] }}" data-lng="{{ $headOffice['location'][1] }}" data-zoom="16"
+                            data-name="{{ $headOffice['name'] }}" role="region" aria-label="{{ __('Map: :name', ['name' => $headOffice['name']]) }}"></div>
+                        <a class="office-directions" target="_blank" rel="noopener"
+                            href="{{ \App\Support\OfficeLocations::directionsUrl($headOffice['location'][0], $headOffice['location'][1]) }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+                            {{ __('Get directions') }}
+                        </a>
+                    </div>
+                @endif
             </div>
+            @endif
 
             {{-- Section Label --}}
             <div class="section-intro-text text-center reveal" style="margin-bottom:2.5rem;">
@@ -45,6 +72,7 @@
                 <p class="section-subtitle">{{ __('Complete contact information for all divisions and sections') }}</p>
             </div>
 
+            @if(count($divisions))
             {{-- Division Table --}}
             <div class="ho-table-wrap reveal">
                 <div class="ho-table-toolbar">
@@ -101,14 +129,16 @@
                     </table>
                 </div>
 
+                @if($headOffice['hours'])
                 <div class="ho-table-footer">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                         style="width:14px;height:14px; color:var(--green-600);">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <span>{{ __('Office hours: Monday – Friday, 8:30 AM – 4:15 PM. All phone numbers are in the Colombo area (011).') }}</span>
+                    <span>{{ __('Office hours') }}: {{ $headOffice['hours'] }}</span>
                 </div>
+                @endif
             </div>
 
             {{-- Division Cards (Mobile-friendly) --}}
@@ -172,6 +202,12 @@
                     </div>
                 @endforeach
             </div>
+            @else
+                {{-- No divisions added yet (Admin → Head Office) --}}
+                <div class="ro-no-results" style="display:block;">
+                    <h3>{{ __('The Head Office directory will be available soon.') }}</h3>
+                </div>
+            @endif
 
         </div>
     </div>

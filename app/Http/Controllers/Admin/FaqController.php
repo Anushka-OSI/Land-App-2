@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Concerns\RequiresAllLanguages;
 use App\Http\Controllers\Controller;
 use App\Models\Faq;
 use Illuminate\Http\Request;
@@ -10,6 +11,8 @@ use Illuminate\Validation\Rule;
 
 class FaqController extends Controller
 {
+    use RequiresAllLanguages;
+
     public function index(Request $request)
     {
         $faqs = Faq::query()
@@ -71,14 +74,19 @@ class FaqController extends Controller
     {
         $data = $request->validate([
             'category'   => ['required', Rule::in(array_keys(Faq::CATEGORIES))],
-            'question'   => 'required|string|max:255',
-            'answer'     => 'required|string|max:5000',
+            'question'   => 'nullable|string|max:255',
+            'answer'     => 'nullable|string|max:5000',
             'question_si' => 'nullable|string|max:255',
             'answer_si'   => 'nullable|string|max:5000',
             'question_ta' => 'nullable|string|max:255',
             'answer_ta'   => 'nullable|string|max:5000',
             'keywords'   => 'nullable|string|max:1000',
             'sort_order' => 'required|integer|min:0|max:100000',
+        ]);
+
+        $this->checkAllLanguages($data, [
+            'Question' => self::englishBaseColumns('question'),
+            'Answer' => self::englishBaseColumns('answer'),
         ]);
 
         // "deed, title deed, ownership" -> ['deed', 'title deed', 'ownership']

@@ -12,8 +12,9 @@
 @endphp
 
 <div class="lang-tabs" data-lang-tabs>
-    <p class="lang-tabs-help">Write this item in one, two or all three languages. Leave a language empty to skip it – the
-        website then shows another available language instead.</p>
+    <p class="lang-tabs-help"><strong>Add this item in all three languages</strong> – English, Sinhala and Tamil each need a
+        title and a short description. The full story is optional, but if you write it in one language, add it in all three.
+        A tick on a tab shows that language has been filled in.</p>
 
     <div class="lang-tablist" role="tablist" aria-label="Content language">
         @foreach($langs as $code => $lang)

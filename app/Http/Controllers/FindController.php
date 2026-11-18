@@ -21,13 +21,16 @@ class FindController extends Controller
     }
 
     /**
-     * GET /find/search?map_no=..&block_no=..&sheet_no=..&lot_no=..
+     * GET /find/search?map_no=..&block_no=..&sheet_no=..&lot_no=..[&file_no=..]
      *
      * Calls the eTitle API:
      *   {base_url}/get-form14-get-record/{map}/{block}/{sheetno}/{lotno}
      * and returns its JSON unchanged:
      *   found:     {"message":[{...record...}],"states":200}
      *   not found: {"message":"Data Not found..","states":500}
+     *
+     * The eTitle API cannot search by file number, so an optional file_no only keeps
+     * the records whose file number (file_no, or file_code) matches what was typed.
      */
     public function search(Request $request): JsonResponse
     {
@@ -38,11 +41,13 @@ class FindController extends Controller
             'block_no' => $rule,
             'sheet_no' => $rule,
             'lot_no'   => $rule,
+            'file_no'  => ['nullable', 'string', 'max:100', 'regex:/^[\pL\pN\/\-\.\s()]+$/u'],
         ], [
             'map_no.required'   => __('Please enter the Map Number.'),
             'block_no.required' => __('Please enter the Block Number.'),
             'sheet_no.required' => __('Please enter the Sheet Number.'),
             'lot_no.required'   => __('Please enter the Lot Number.'),
+            'file_no.regex'     => __('The File No can only contain letters, numbers, / - . and spaces.'),
             '*.regex'           => __('Only letters, numbers and hyphens are allowed.'),
         ]);
 
@@ -51,7 +56,39 @@ class FindController extends Controller
             [$validated['map_no'], $validated['block_no'], $validated['sheet_no'], $validated['lot_no']]
         ));
 
-        return $this->proxy($path);
+        $response = $this->proxy($path);
+
+        return filled($validated['file_no'] ?? null)
+            ? $this->onlyFileNo($response, $validated['file_no'])
+            : $response;
+    }
+
+    /** Keep only the records whose file number matches (ignoring upper/lower case and spaces). */
+    private function onlyFileNo(JsonResponse $response, string $fileNo): JsonResponse
+    {
+        $json = $response->getData(true);
+
+        if (!is_array($json) || (int) ($json['states'] ?? 0) !== 200 || !is_array($json['message'] ?? null)) {
+            return $response; // not found / error – pass it on unchanged
+        }
+
+        $normalise = fn ($value) => preg_replace('/\s+/u', '', mb_strtolower(trim((string) $value)));
+        $wanted = $normalise($fileNo);
+
+        $records = array_is_list($json['message']) ? $json['message'] : [$json['message']];
+        $matching = array_values(array_filter($records, fn ($record) => is_array($record) && (
+            $normalise($record['file_no'] ?? '') === $wanted || $normalise($record['file_code'] ?? '') === $wanted
+        )));
+
+        if ($matching === []) {
+            return response()->json([
+                'states'  => 500,
+                'message' => 'Data Not found..',
+                'reason'  => 'file_no',
+            ]);
+        }
+
+        return response()->json(['message' => $matching, 'states' => 200]);
     }
 
     /**

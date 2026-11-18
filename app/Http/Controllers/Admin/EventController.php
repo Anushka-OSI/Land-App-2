@@ -50,6 +50,13 @@ class EventController extends Controller
         return redirect()->route('admin.events.index')->with('success', 'Event created.');
     }
 
+    public function show(Event $event)
+    {
+        $event->load('images');
+
+        return view('admin.events.show', ['item' => $event]);
+    }
+
     public function edit(Event $event)
     {
         $event->load('images');
@@ -74,7 +81,7 @@ class EventController extends Controller
             $this->storeImages($request, $event);
         });
 
-        return redirect()->route('admin.events.edit', $event)->with('success', 'Event updated.');
+        return redirect()->route('admin.events.show', $event)->with('success', 'Event updated.');
     }
 
     public function destroy(Event $event)

@@ -88,28 +88,21 @@
                 </div>
             </section>
 
-            {{-- Core Aims Summary on Overview Page --}}
-            <section class="overview-aims-preview reveal">
-                <div class="section-header-row">
-                    <div>
-                        <span class="section-label">{{ __('Our Core Objectives') }}</span>
-                        <h2 class="section-title">{{ __('Aims of the Organization') }}</h2>
+            {{-- Key Legislative Framework --}}
+            <section class="acts-callout-section reveal">
+                <div class="acts-callout-box">
+                    <div class="acts-callout-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
                     </div>
-                    <a href="{{ route('about.aims') }}" class="btn-link-action">
-                        {{ __('View All Statutory Aims') }}
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    <div class="acts-callout-text">
+                        <h3>{{ __('Key Legislative Framework') }}</h3>
+                        <p>
+                            {!! __('All functions and powers executed by the Department of Land Title Settlement are codified under the <strong>Land Settlement Ordinance No. 20 of 1931</strong> and the <strong>Registration of Title Act No. 21 of 1998</strong>.') !!}
+                        </p>
+                    </div>
+                    <a href="{{ route('about.aims') }}" class="btn btn-outline" style="border-color:rgba(255,255,255,0.4);color:white;white-space:nowrap;">
+                        {{ __('Our Aims & Objectives') }}
                     </a>
-                </div>
-
-                <div class="aims-grid-preview">
-                    @foreach(array_slice($aims, 0, 4) as $aim)
-                        <div class="aim-mini-card">
-                            <div class="aim-mini-num">0{{ $aim['id'] }}</div>
-                            <h3 class="aim-mini-title">{{ $aim['title'] }}</h3>
-                            <p class="aim-mini-desc">{{ Str::limit($aim['description'], 140) }}</p>
-                            <span class="aim-mini-act">{{ $aim['act'] }}</span>
-                        </div>
-                    @endforeach
                 </div>
             </section>
 

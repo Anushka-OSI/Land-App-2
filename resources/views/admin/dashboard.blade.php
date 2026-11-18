@@ -34,6 +34,7 @@
     <div class="quick-actions">
         <a href="{{ route('admin.news.create') }}" class="btn btn-primary">+ Add News / Notice</a>
         <a href="{{ route('admin.events.create') }}" class="btn btn-primary">+ Add Event</a>
+        <a href="{{ route('admin.calendar.create') }}" class="btn btn-light">+ Add Calendar Event</a>
         <a href="{{ route('admin.faqs.create') }}" class="btn btn-light">+ Add FAQ</a>
         <a href="{{ route('admin.messages.index') }}" class="btn btn-light">View Messages</a>
     </div>
@@ -69,7 +70,7 @@
                 <a href="{{ route('admin.news.index') }}" class="panel-link">Manage</a>
             </div>
             @forelse($recentNews as $item)
-                <a href="{{ route('admin.news.edit', $item) }}" class="list-row">
+                <a href="{{ route('admin.news.show', $item) }}" class="list-row">
                     <div class="list-main" lang="{{ $item->displayLanguage() }}">
                         <div class="list-title">{{ $item->title }}</div>
                         <div class="list-sub" lang="en">{{ collect($item->availableLanguages())->map(fn ($l) => \App\Support\Languages::native($l))->implode(" / ") }} · {{ $item->published_at->format('M j, Y') }}
@@ -91,7 +92,7 @@
                 <a href="{{ route('admin.events.index') }}" class="panel-link">Manage</a>
             </div>
             @forelse($recentEvents as $item)
-                <a href="{{ route('admin.events.edit', $item) }}" class="list-row">
+                <a href="{{ route('admin.events.show', $item) }}" class="list-row">
                     <div class="list-main" lang="{{ $item->displayLanguage() }}">
                         <div class="list-title">{{ $item->title }}</div>
                         <div class="list-sub" lang="en">{{ collect($item->availableLanguages())->map(fn ($l) => \App\Support\Languages::native($l))->implode(" / ") }} · {{ $item->event_date->format('M j, Y') }}

@@ -74,6 +74,17 @@
                                 <small class="field-error" data-error-for="lot_no"></small>
                             </div>
 
+                            {{-- Optional: only show the record with this file number --}}
+                            <div style="grid-column: 1 / -1;">
+                                <label for="file_no"
+                                    style="display:block; font-family:var(--font-accent); font-weight:600; font-size:0.85rem; color:var(--gray-700); margin-bottom:0.5rem; text-transform:uppercase; letter-spacing:0.05em;">{{ __('File No.') }}
+                                    <span style="text-transform:none; letter-spacing:0; font-weight:500; color:var(--gray-500);">({{ __('optional') }})</span></label>
+                                <input type="text" id="file_no" name="file_no" class="form-control" autocomplete="off" maxlength="100" placeholder="{{ __('e.g. LTS/KAN/2024/015') }}"
+                                    style="width:100%; padding:0.85rem 1rem; border:1px solid var(--gray-200); border-radius:var(--radius-md); font-family:var(--font-body); outline:none; transition:var(--transition-fast);">
+                                <small class="field-error" data-error-for="file_no"></small>
+                                <small style="display:block; margin-top:.35rem; color:var(--gray-500); font-size:.82rem;">{{ __('If you know the file number, enter it to make sure the record shown is for your file.') }}</small>
+                            </div>
+
                         </div>
 
                         <div style="text-align: center;">
@@ -264,6 +275,7 @@
                 'unexpected' => __('The server returned an unexpected response (HTTP :status).'),
                 'nicSubtitle' => __('Land records for NIC :nic'),
                 'nicNotFound' => __('We couldn\'t find any land records for NIC :nic.'),
+                'fileNoNotFound' => __('A record was not found for File No :file with these Map, Block, Sheet and Lot numbers. Please check the File No, or search without it.'),
             ];
     @endphp
     <script>
@@ -304,6 +316,7 @@
                 ['block_no', @json(__('Block No'))],
                 ['sheet_number', @json(__('Sheet No'))],
                 ['lot_no', @json(__('Lot No'))],
+                ['file_no', @json(__('File No'))],
                 ['current_stage', @json(__('Current Stage'))],
                 ['owner_names', @json(__('Owner Name'))],
                 ['owner_sizes', @json(__('Land Size'))],
@@ -314,6 +327,12 @@
                 ['gazette_date', @json(__('Gazette Date'))],
                 // ['certificate_number', 'Certificate No'],    
             ];
+
+            // Value of one field; the file number may be in file_no or file_code
+            function fieldValue(record, key) {
+                if (key === 'file_no') return record.file_no || record.file_code;
+                return record[key];
+            }
 
             function toText(value) {
                 if (value === null || value === undefined || value === '') return '—';
@@ -349,7 +368,7 @@
                             ${DISPLAY_FIELDS.map(([key, label]) => `
                                 <div>
                                     <span class="result-label">${escapeHtml(label)}</span>
-                                    <span class="result-value">${escapeHtml(toText(record[key]))}</span>
+                                    <span class="result-value">${escapeHtml(toText(fieldValue(record, key)))}</span>
                                 </div>`).join('')}
                         </div>
                     </div>`).join('');
@@ -471,10 +490,19 @@
                     return;
                 }
 
+                // Optional file number
+                const fileInput = document.getElementById('file_no');
+                fileInput.classList.remove('is-invalid');
+                form.querySelector('[data-error-for="file_no"]').textContent = '';
+                const fileNo = fileInput.value.trim();
+                if (fileNo) values.file_no = fileNo;
+
                 // e.g. /find/search?map_no=120036&block_no=1&sheet_no=2&lot_no=70
                 runSearch(`${SEARCH_URL}?${new URLSearchParams(values).toString()}`, {
                     subtitle: @json(__('Details matching your criteria')),
-                    notFound: @json(__('We couldn\'t find any settlement records matching those details. Please check your inputs and try again.')),
+                    notFound: fileNo
+                        ? T.fileNoNotFound.replace(':file', fileNo)
+                        : @json(__('We couldn\'t find any settlement records matching those details. Please check your inputs and try again.')),
                     onValidationError(errors) {
                         Object.entries(errors).forEach(([name, messages]) => {
                             const input = document.getElementById(name);

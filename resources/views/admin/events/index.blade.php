@@ -36,7 +36,7 @@
                                     <span class="cell-thumb placeholder" aria-hidden="true"></span>
                                 @endif
                                 <div>
-                                    <a href="{{ route('admin.events.edit', $item) }}" class="cell-title">{{ $item->title }}</a>
+                                    <a href="{{ route('admin.events.show', $item) }}" class="cell-title">{{ $item->title }}</a>
                                     <div class="cell-sub">{{ \Illuminate\Support\Str::limit($item->excerpt, 80) }}</div>
                                 </div>
                             </div>
@@ -63,6 +63,7 @@
                             </span>
                         </td>
                         <td class="actions-col">
+                            <a href="{{ route('admin.events.show', $item) }}" class="btn btn-light btn-sm">View</a>
                             <a href="{{ route('admin.events.edit', $item) }}" class="btn btn-light btn-sm">Edit</a>
                             <form method="POST" action="{{ route('admin.events.destroy', $item) }}" class="inline"
                                 data-confirm="Delete &quot;{{ $item->title }}&quot; and all its photos? This cannot be undone.">

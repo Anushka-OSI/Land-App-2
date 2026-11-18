@@ -16,11 +16,13 @@
     <div style="background: var(--gray-50); padding: 4rem 0;">
         <div class="container">
 
-            {{-- ─── Quick Contact Strip ─────────────────────────── --}}
+            {{-- ─── Quick Contact Strip (Admin → Head Office → Office details) ─── --}}
+            @if($headOffice['name'] || $headOffice['address'] || $headOffice['phone'] || $headOffice['fax'] || $headOffice['email'])
             <div
                 style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 3.5rem;">
 
                 {{-- Address --}}
+                @if($headOffice['name'] || $headOffice['address'])
                 <div
                     style="background:var(--white); border-radius:var(--radius-lg); padding:2rem; box-shadow:var(--shadow-sm); display:flex; gap:1.25rem; align-items:flex-start; border-left:4px solid var(--green-600);">
                     <div
@@ -38,12 +40,17 @@
                             style="font-family:var(--font-heading); color:var(--green-800); font-size:1.1rem; margin-bottom:.35rem;">
                             {{ __('Head Office Address') }}</h4>
                         <p style="color:var(--gray-600); font-size:.92rem; line-height:1.6; margin:0;">
-                            {!! __('Department of Land Title Settlement,<br> 1200/7, Rajamalwatta Road,<br> Battaramulla, Sri Lanka.') !!}
+                            @if($headOffice['name'])
+                                {{ $headOffice['name'] }}@if($headOffice['address'])<br>@endif
+                            @endif
+                            {!! nl2br(e($headOffice['address'])) !!}
                         </p>
                     </div>
                 </div>
+                @endif
 
-                {{-- Emergency Hotline --}}
+                {{-- Contact Numbers --}}
+                @if($headOffice['phone'] || $headOffice['fax'])
                 <div
                     style="background:var(--white); border-radius:var(--radius-lg); padding:2rem; box-shadow:var(--shadow-sm); display:flex; gap:1.25rem; align-items:flex-start; border-left:4px solid var(--gold-500);">
                     <div
@@ -59,12 +66,20 @@
                             style="font-family:var(--font-heading); color:var(--green-800); font-size:1.1rem; margin-bottom:.35rem;">
                             {{ __('Contact Numbers') }}</h4>
                         <p style="color:var(--gray-600); font-size:.92rem; line-height:1.8; margin:0;">
-                            {!! __('<strong>General:</strong> +94 11 2888 935<br> <strong>Fax:</strong> +94 11 2888 937') !!}
+                            @if($headOffice['phone'])
+                                <strong>{{ __('General') }}:</strong> <a href="tel:{{ $headOffice['phone'] }}"
+                                    style="color:inherit;">{{ $headOffice['phone'] }}</a>@if($headOffice['fax'])<br>@endif
+                            @endif
+                            @if($headOffice['fax'])
+                                <strong>{{ __('Fax') }}:</strong> {{ $headOffice['fax'] }}
+                            @endif
                         </p>
                     </div>
                 </div>
+                @endif
 
                 {{-- Email --}}
+                @if($headOffice['email'])
                 <div
                     style="background:var(--white); border-radius:var(--radius-lg); padding:2rem; box-shadow:var(--shadow-sm); display:flex; gap:1.25rem; align-items:flex-start; border-left:4px solid var(--green-800);">
                     <div
@@ -80,13 +95,15 @@
                             style="font-family:var(--font-heading); color:var(--green-800); font-size:1.1rem; margin-bottom:.35rem;">
                             {{ __('Email Address') }}</h4>
                         <p style="color:var(--gray-600); font-size:.92rem; line-height:1.8; margin:0;">
-                            <a href="mailto:info@landtitle.gov.lk"
-                                style="color:var(--green-600); font-weight:600;">info@landtitle.gov.lk</a>
+                            <a href="mailto:{{ $headOffice['email'] }}"
+                                style="color:var(--green-600); font-weight:600;">{{ $headOffice['email'] }}</a>
                         </p>
                     </div>
                 </div>
+                @endif
 
             </div>
+            @endif
 
             {{-- ─── Inquiry Form ───────────────────────────────── --}}
             <div style="max-width:860px; margin:0 auto;">

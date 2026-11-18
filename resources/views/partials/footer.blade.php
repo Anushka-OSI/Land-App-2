@@ -1,3 +1,10 @@
+@php
+    // Head Office address / phone / email from Admin → Head Office → Office details
+    $hoAddress = preg_replace('/\s*,?\s*\R\s*/u', ', ', (string) \App\Support\HeadOfficeDetails::text('address'));
+    $hoPhone = \App\Support\HeadOfficeDetails::contact('phone');
+    $hoEmail = \App\Support\HeadOfficeDetails::contact('email');
+    $hoLocation = \App\Support\HeadOfficeDetails::location();
+@endphp
 {{-- Footer --}}
 <footer class="footer" id="footer" role="contentinfo" aria-label="{{ __('Site footer') }}">
     <div class="container">
@@ -16,20 +23,28 @@
                 <p class="footer-tagline">
                     {{ __('Securing land ownership rights for every Sri Lankan citizen through transparent and accessible land management services.') }}
                 </p>
+                @if($hoAddress || $hoPhone || $hoEmail)
                 <div class="footer-contact-info">
+                    @if($hoAddress)
                     <div class="footer-contact-item">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                        {{ __('No 1200/6, Mihikatha Medura, Rajamalwatta Road, Battaramulla, Sri Lanka') }}
+                        {{ $hoAddress }}
                     </div>
+                    @endif
+                    @if($hoPhone)
                     <div class="footer-contact-item">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                        +94 11 249 9450
+                        <a href="tel:{{ $hoPhone }}" style="color:inherit;">{{ $hoPhone }}</a>
                     </div>
+                    @endif
+                    @if($hoEmail)
                     <div class="footer-contact-item">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                        info@landsettledept.gov.lk
+                        <a href="mailto:{{ $hoEmail }}" style="color:inherit;">{{ $hoEmail }}</a>
                     </div>
+                    @endif
                 </div>
+                @endif
                 <div class="social-links" aria-label="{{ __('Social media links') }}">
                     <a href="#" class="social-btn" aria-label="Facebook" id="social-facebook">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
@@ -101,19 +116,28 @@
             {{-- Col 4: Map --}}
             <div class="footer-map-col">
                 <h3 class="footer-col-title">{{ __('Find Us') }}</h3>
+                @if($hoLocation)
                 <div class="footer-map" aria-label="{{ __('Department location map') }}">
+                    {{-- Head Office location from Admin → Head Office → Office details --}}
                     <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.798!2d79.9184!3d6.9271!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25987b06f02d3%3A0x7ef7a490d2a40e82!2sMinistry%20of%20Lands!5e0!3m2!1sen!2slk!4v1"
+                        src="https://www.openstreetmap.org/export/embed.html?bbox={{ $hoLocation[1] - 0.006 }}%2C{{ $hoLocation[0] - 0.004 }}%2C{{ $hoLocation[1] + 0.006 }}%2C{{ $hoLocation[0] + 0.004 }}&layer=mapnik&marker={{ $hoLocation[0] }}%2C{{ $hoLocation[1] }}"
                         allowfullscreen=""
                         loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade"
                         title="{{ __('Department of Land Title Settlement location') }}"
                     ></iframe>
                 </div>
+                <a class="footer-directions" target="_blank" rel="noopener"
+                    href="{{ \App\Support\OfficeLocations::directionsUrl($hoLocation[0], $hoLocation[1]) }}">
+                    {{ __('Get directions') }} →
+                </a>
+                @endif
+                @if($hoAddress)
                 <div class="map-address">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
-                    {{ __('No 1200/6, Mihikatha Medura, Rajamalwatta Road, Battaramulla, Sri Lanka') }}
+                    {{ $hoAddress }}
                 </div>
+                @endif
 
                 <div style="margin-top:1.25rem;">
                     <div class="visitors-badge">

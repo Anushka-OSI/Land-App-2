@@ -6,8 +6,16 @@
 
     <a href="{{ route('admin.news.index') }}" class="back-link">&larr; Back to News &amp; Notices</a>
 
+    @if(request()->boolean('upload_too_large'))
+        <div class="alert alert-error" role="alert">
+            The documents were too large to upload in one save (the server accepts up to
+            {{ number_format(\App\Models\Event::serverUploadLimit() / 1024 / 1024) }} MB at a time), so nothing was saved.
+            Please save with fewer documents, then edit the item to add the rest.
+        </div>
+    @endif
+
     <form method="POST" action="{{ $item->exists ? route('admin.news.update', $item) : route('admin.news.store') }}"
-        class="panel form-panel" novalidate>
+        enctype="multipart/form-data" class="panel form-panel" novalidate>
         @csrf
         @if($item->exists)
             @method('PUT')
@@ -23,14 +31,14 @@
 
         @include('admin.partials.translation-tabs', ['item' => $item])
 
+        {{-- Documents for visitors to view / download (PDF, Word, Excel …) --}}
+        @include('admin.news.partials.documents', ['item' => $item])
+
         @include('admin.partials.publish-options', ['item' => $item])
 
         <div class="form-actions">
             <button type="submit" class="btn btn-primary">{{ $item->exists ? 'Save Changes' : 'Create' }}</button>
-            <a href="{{ route('admin.news.index') }}" class="btn btn-light">Cancel</a>
-            @if($item->exists && $item->is_published)
-                <a href="{{ route('news.show', $item) }}" target="_blank" class="btn btn-light">View on website ↗</a>
-            @endif
+            <a href="{{ $item->exists ? route('admin.news.show', $item) : route('admin.news.index') }}" class="btn btn-light">Cancel</a>
         </div>
     </form>
 

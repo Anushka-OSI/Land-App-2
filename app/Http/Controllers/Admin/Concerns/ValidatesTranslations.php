@@ -9,11 +9,13 @@ use Illuminate\Validation\ValidationException;
 
 /**
  * Validation for the English / Sinhala / Tamil tabs on the News & Notices and Events forms.
- * - Fill in at least one language.
- * - A language that has anything typed in needs both a title and a short description.
+ * - Every item must be added in all three languages: title and short description in each.
+ * - The full story is optional, but when it is written in one language it is needed in all three.
  */
 trait ValidatesTranslations
 {
+    use RequiresAllLanguages;
+
     protected function translationRules(): array
     {
         $rules = [];
@@ -42,37 +44,24 @@ trait ValidatesTranslations
     protected function translatedData(array $validated): array
     {
         $data = [];
-        $errors = [];
-        $filledAny = false;
 
-        foreach (Languages::ALL as $lang => $info) {
+        foreach (Languages::codes() as $lang) {
             $title = trim((string) ($validated["title_{$lang}"] ?? ''));
             $excerpt = trim((string) ($validated["excerpt_{$lang}"] ?? ''));
-            $body = RichText::clean($validated["body_{$lang}"] ?? null);
 
-            if ($title === '' && $excerpt === '' && $body === null) {
-                $data += ["title_{$lang}" => null, "excerpt_{$lang}" => null, "body_{$lang}" => null];
-                continue;
-            }
-
-            $filledAny = true;
-            if ($title === '') {
-                $errors["title_{$lang}"] = "Please add the {$info['label']} title (or clear the other {$info['label']} fields).";
-            }
-            if ($excerpt === '') {
-                $errors["excerpt_{$lang}"] = "Please add the {$info['label']} short description.";
-            }
-
-            $data += ["title_{$lang}" => $title ?: null, "excerpt_{$lang}" => $excerpt ?: null, "body_{$lang}" => $body];
+            $data += [
+                "title_{$lang}" => $title ?: null,
+                "excerpt_{$lang}" => $excerpt ?: null,
+                "body_{$lang}" => RichText::clean($validated["body_{$lang}"] ?? null),
+            ];
         }
 
-        if (!$filledAny) {
-            $errors['title_en'] = 'Please fill in at least one language (title and short description).';
-        }
-
-        if ($errors) {
-            throw ValidationException::withMessages($errors);
-        }
+        $this->checkAllLanguages($data, [
+            'Title' => self::suffixedColumns('title'),
+            'Short description' => self::suffixedColumns('excerpt'),
+        ], [
+            'Full story' => self::suffixedColumns('body'),
+        ]);
 
         return $data;
     }

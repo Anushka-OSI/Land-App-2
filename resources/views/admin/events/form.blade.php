@@ -38,11 +38,7 @@
 
         <div class="form-actions">
             <button type="submit" class="btn btn-primary" id="event-submit">{{ $item->exists ? 'Save Changes' : 'Create Event' }}</button>
-            <a href="{{ route('admin.events.index') }}" class="btn btn-light">Cancel</a>
-            @if($item->exists && $item->is_published)
-                <a href="{{ route('events.show', $item) }}" target="_blank" class="btn btn-light">View on website ↗</a>
-            @endif
-        </div>
+            <a href="{{ $item->exists ? route('admin.events.show', $item) : route('admin.events.index') }}" class="btn btn-light">Cancel</a>        </div>
     </form>
 
 @endsection

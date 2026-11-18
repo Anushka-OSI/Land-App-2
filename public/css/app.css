@@ -676,7 +676,7 @@ ul { list-style: none; }
 }
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(var(--stat-cols, 4), 1fr);
     position: relative;
 }
 .stat-item {
@@ -3219,3 +3219,137 @@ ul { list-style: none; }
 .article-topbar .article-back { margin-bottom: 0; }
 .article-topbar .news-lang-filter { margin: 0; }
 .article-notice { background: #fef3c7; color: #92400e; border-radius: 8px; padding: .6rem .9rem; font-size: .88rem; margin-bottom: 1rem; }
+
+/* ── News: attached documents ─────────────────────────────── */
+.article-docs { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--gray-100); }
+.article-docs-title { display: flex; align-items: center; gap: .5rem; font-size: 1.15rem; font-weight: 800; color: var(--green-800); margin-bottom: 1rem; }
+.article-docs-title svg { width: 20px; height: 20px; }
+.doc-cards { display: grid; gap: .65rem; }
+.doc-card {
+    display: flex; align-items: center; gap: .9rem; padding: .85rem 1rem;
+    background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-md);
+    transition: var(--transition-fast);
+}
+.doc-card:hover { border-color: var(--green-300); background: var(--green-50); }
+.doc-icon {
+    flex-shrink: 0; width: 48px; height: 56px; display: flex; align-items: flex-end; justify-content: center; padding-bottom: .55rem;
+    border-radius: 6px 14px 6px 6px; background: var(--gray-600); color: var(--white); font-size: .68rem; font-weight: 800; letter-spacing: .03em;
+}
+.doc-icon--pdf { background: #c0392b; }
+.doc-icon--doc, .doc-icon--docx, .doc-icon--odt { background: #2b5797; }
+.doc-icon--xls, .doc-icon--xlsx, .doc-icon--ods { background: #1e7145; }
+.doc-icon--ppt, .doc-icon--pptx { background: #c4511f; }
+.doc-icon--jpg, .doc-icon--jpeg, .doc-icon--png { background: #7e57c2; }
+.doc-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: .15rem; }
+.doc-name { font-weight: 700; color: var(--gray-900); line-height: 1.35; overflow-wrap: anywhere; }
+.doc-meta { font-size: .8rem; color: var(--gray-600); }
+.doc-actions { display: flex; gap: .5rem; flex-shrink: 0; }
+.doc-btn {
+    display: inline-flex; align-items: center; gap: .4rem; padding: .5rem .9rem; border-radius: 999px;
+    font-size: .84rem; font-weight: 700; white-space: nowrap; transition: var(--transition-fast);
+}
+.doc-btn svg { width: 16px; height: 16px; }
+.doc-btn--view { background: var(--white); color: var(--green-700); border: 1px solid var(--green-300); }
+.doc-btn--view:hover { background: var(--green-50); }
+.doc-btn--download { background: var(--green-700); color: var(--white); border: 1px solid var(--green-700); }
+.doc-btn--download:hover { background: var(--green-600); }
+.doc-btn:focus-visible { outline: 3px solid var(--gold-400); outline-offset: 2px; }
+.news-card-docs { display: inline-flex; align-items: center; gap: .25rem; font-size: .75rem; font-weight: 600; color: var(--gray-600); }
+.news-card-docs svg { width: 14px; height: 14px; }
+@media (max-width: 560px) {
+    .doc-card { flex-wrap: wrap; }
+    .doc-actions { width: 100%; padding-left: calc(48px + .9rem); }
+}
+
+/* ── Office maps (Leaflet) ─────────────────────────────────── */
+.office-map-section { padding: 4.5rem 0; background: linear-gradient(180deg, var(--white) 0%, var(--green-50) 100%); }
+.office-map-layout {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); gap: 2.5rem; align-items: center;
+}
+.office-map-info .section-subtitle { margin: .75rem 0 1.75rem; }
+.office-counts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .75rem; }
+.office-count {
+    display: flex; flex-direction: column; gap: .2rem; padding: 1rem 1.1rem; border-radius: var(--radius-md);
+    background: var(--white); border: 1px solid var(--gray-200); box-shadow: var(--shadow-sm); transition: var(--transition-fast);
+}
+a.office-count:hover { border-color: #d62828; transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.office-count-value { font-size: 2rem; font-weight: 800; line-height: 1; color: #c81e1e; }
+.office-count-label { font-size: .85rem; font-weight: 600; color: var(--gray-700); }
+.office-count--total { background: var(--green-700); border-color: var(--green-700); }
+.office-count--total .office-count-value { color: var(--gold-400); }
+.office-count--total .office-count-label { color: var(--white); }
+.office-legend { display: flex; gap: 1.25rem; margin-top: 1.25rem; font-size: .85rem; color: var(--gray-600); }
+.office-legend li { display: inline-flex; align-items: center; gap: .45rem; }
+.office-legend-dot, .office-list-dot {
+    display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #d62828; box-shadow: 0 0 0 2px var(--white), 0 0 0 4px rgba(214, 40, 40, .25);
+}
+.office-legend-dot--head, .office-list-dot--head { width: 16px; height: 16px; background: #9b1c1c; }
+
+.office-map-frame {
+    position: relative; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--gray-200);
+    box-shadow: var(--shadow-lg); background: #e8eef0;
+}
+.office-map-canvas { height: 520px; width: 100%; }
+.office-map-empty {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 500;
+    background: var(--white); padding: .75rem 1.1rem; border-radius: var(--radius-md); box-shadow: var(--shadow-md);
+    font-weight: 600; color: var(--gray-700); text-align: center;
+}
+.office-list { grid-column: 1 / -1; background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: .85rem 1.1rem; }
+.office-list summary { cursor: pointer; font-weight: 700; color: var(--green-800); }
+.office-list ul { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: .35rem 1rem; margin-top: .85rem; }
+.office-list a { display: inline-flex; align-items: center; gap: .55rem; padding: .3rem 0; color: var(--gray-700); font-size: .9rem; }
+.office-list a:hover { color: #c81e1e; }
+.office-list .office-list-dot { width: 9px; height: 9px; flex-shrink: 0; }
+.office-list .office-list-dot--head { width: 12px; height: 12px; }
+
+.leaflet-container .office-dot { cursor: pointer; transition: stroke-width .15s ease; }
+.leaflet-container .office-dot:hover, .leaflet-container .office-dot:focus { stroke-width: 4; outline: none; }
+.leaflet-container .office-dot-halo { animation: office-halo 2.4s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+@keyframes office-halo { 50% { transform: scale(1.35); opacity: .55; } }
+@media (prefers-reduced-motion: reduce) { .leaflet-container .office-dot-halo { animation: none; } }
+.leaflet-tooltip.office-tooltip {
+    font-family: var(--font-body); font-size: .82rem; line-height: 1.4; padding: .5rem .7rem; max-width: 260px; white-space: normal;
+    border-radius: 8px; border: 0; box-shadow: var(--shadow-md); color: var(--gray-800);
+}
+.leaflet-tooltip.office-tooltip span { color: var(--gray-600); }
+.leaflet-tooltip.office-tooltip em { color: #c81e1e; font-style: normal; font-weight: 700; font-size: .78rem; }
+
+/* Single office map on the Contact Us pages */
+.office-location { margin-top: 1rem; }
+.office-location-map {
+    height: 190px; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--gray-200); background: #e8eef0;
+    position: relative; z-index: 0;
+}
+.office-location--wide .office-location-map { height: 320px; }
+.office-directions {
+    display: inline-flex; align-items: center; gap: .4rem; margin-top: .6rem; font-size: .85rem; font-weight: 700; color: var(--green-700);
+}
+.office-directions svg { width: 16px; height: 16px; }
+.office-directions:hover { text-decoration: underline; }
+
+/* Arriving from the homepage map: highlight the office and keep it clear of the sticky navbar */
+.ro-office-card, #head-office { scroll-margin-top: 110px; }
+.ro-office-card:target {
+    outline: 3px solid #d62828; outline-offset: 3px;
+    animation: office-target 1.6s ease 2;
+}
+#head-office:target .ho-addr-card { outline: 3px solid #d62828; outline-offset: 3px; }
+@keyframes office-target { 50% { box-shadow: 0 0 0 10px rgba(214, 40, 40, .18); } }
+
+@media (max-width: 960px) {
+    .office-map-layout { grid-template-columns: minmax(0, 1fr); }
+    .office-map-canvas { height: 440px; }
+}
+@media (max-width: 560px) {
+    .office-map-section { padding: 3rem 0; }
+    .office-counts { gap: .5rem; }
+    .office-count { padding: .75rem .7rem; }
+    .office-count-value { font-size: 1.6rem; }
+    .office-count-label { font-size: .75rem; }
+    .office-map-canvas { height: 380px; }
+}
+
+/* Footer: directions link under the Head Office map */
+.footer-directions { display: inline-block; margin-top: .6rem; font-size: .85rem; font-weight: 700; color: var(--gold-400); }
+.footer-directions:hover { text-decoration: underline; }

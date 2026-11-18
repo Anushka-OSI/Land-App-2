@@ -13,11 +13,13 @@
     {{-- Latest News Slideshow --}}
     @include('partials.latest-news-slideshow')
 
+    {{-- Our Offices: Head Office and regional offices on a map (Admin → Head Office / Regional Offices) --}}
+    @include('partials.office-map', ['officeMap' => $officeMap])
+
     {{-- Services --}}
     @include('partials.services')
 
-
-    {{-- Mission & Vision --}}
+    {{-- Our Purpose --}}
     @include('partials.mission-vision')
 
 @endsection

@@ -16,7 +16,9 @@ use Symfony\Component\HttpFoundation\Response;
  *
  *  - Choosing a language: any page with ?lang=si|ta|en (the first-visit chooser and the
  *    language switcher link to this). The choice is saved in the session and in a cookie
- *    for a year, then the visitor is redirected to the same page without ?lang.
+ *    for a year, then the visitor is redirected to the same page without ?lang. Any
+ *    ?read=xx (per-article "Read in:" choice) is removed as well, so the article switches
+ *    to the newly chosen language.
  *  - Until a language has been chosen, $languageChosen is false and the layout shows the
  *    full-screen language chooser.
  *  - The admin panel always stays in English.
@@ -42,8 +44,10 @@ class SetLocale
             Cookie::queue(self::COOKIE, $requested, self::COOKIE_MINUTES);
 
             // Normal page visit: reload the same page without ?lang so links stay clean.
+            // ?read (the "Read in:" switch on a News / Event page) is dropped too, so the
+            // content follows the language the visitor has just chosen for the whole site.
             if ($request->isMethod('GET') && !$request->expectsJson()) {
-                return redirect()->to($request->fullUrlWithoutQuery('lang'));
+                return redirect()->to($request->fullUrlWithoutQuery(['lang', 'read']));
             }
         }
 

@@ -14,8 +14,7 @@ class AboutController extends Controller
 
     public function overview()
     {
-        $aims = $this->getAims();
-        return view('about.overview', compact('aims'));
+        return view('about.overview');
     }
 
     public function organizationChart()
